@@ -140,7 +140,7 @@ export default function BinPack3D(){
   };
 
   const lcol=gl<=5?"#22c55e":gl<=15?"#f59e0b":"#ef4444";
-  const ts=a=>({padding:"5px 14px",fontSize:12,fontWeight:a?600:400,background:"none",border:"none",borderBottom:a?"2px solid var(--color-text-primary)":"2px solid transparent",cursor:"pointer",color:a?"var(--color-text-primary)":"var(--color-text-secondary)"});
+  const ts=a=>({padding:"5px 14px",fontSize:12,fontWeight:a?600:400,background:a?"rgba(59,130,246,0.12)":"none",border:"none",borderBottom:a?"2px solid var(--color-text-primary)":"2px solid transparent",cursor:"pointer",color:a?"var(--color-text-primary)":"var(--color-text-secondary)"});
   const contVolM3=((cont.L*cont.W*cont.H)/1e6).toFixed(1);
 
   const cellIn=(extra={})=>({fontFamily:"var(--font-mono)",fontSize:11,padding:"2px 3px",border:"none",borderRadius:3,width:"100%",textAlign:"center",background:"transparent",color:"var(--color-text-primary)",outline:"none",...extra});
@@ -165,9 +165,9 @@ export default function BinPack3D(){
               return(
                 <button key={key} onClick={()=>handleContType(key)}
                   style={{padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:active?600:400,
-                    background:active?"var(--color-text-primary)":"var(--color-background-secondary)",
-                    color:active?"var(--color-background-primary)":"var(--color-text-secondary)",
-                    border:"0.5px solid var(--color-border-secondary)",borderRadius:6,cursor:"pointer",lineHeight:1.3,textAlign:"center"}}>
+                    background:active?"#3b82f6":"var(--color-background-secondary)",
+                    color:active?"#fff":"var(--color-text-secondary)",
+                    border:`0.5px solid ${active?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3,textAlign:"center"}}>
                   {ct.label}
                 </button>
               );
@@ -186,7 +186,7 @@ export default function BinPack3D(){
         </div>
 
         {/* Tabs */}
-        <div style={{display:"flex", fontSize:12, borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+        <div style={{display:"flex", fontSize:15, borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <button style={ts(tab==="boxes")} onClick={()=>setTab("boxes")}>Cartons</button>
           <button style={ts(tab==="leeway")} onClick={()=>setTab("leeway")}>Leeway %</button>
         </div>
@@ -197,20 +197,20 @@ export default function BinPack3D(){
           {tab==="boxes"&&(
             <div>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <span style={{fontSize:12,color:"var(--color-text-secondary)",letterSpacing:.5}}>
+                <span style={{fontSize:14,color:"var(--color-text-secondary)",letterSpacing:.5}}>
                   SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active
                 </span>
                 <button onClick={resetQty}
-                  style={{fontSize:9,color:"var(--color-text-secondary)",background:"none",border:"0.5px solid var(--color-border-secondary)",borderRadius:4,padding:"2px 7px",cursor:"pointer"}}>
+                  style={{fontSize:14,color:"var(--color-text-secondary)",background:"none",border:"0.5px solid var(--color-border-secondary)",borderRadius:4,padding:"2px 7px",cursor:"pointer"}}>
                   clear all
                 </button>
               </div>
 
               {/* Header row */}
               <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
-                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
-                <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>Description</span>
-                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty    </span>
+                <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
+                <span style={{fontSize:14,color:"var(--color-text-secondary)"}}>Description</span>
+                <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty    </span>
               </div>
 
               {/* One compact row per carton type */}
@@ -345,7 +345,7 @@ export default function BinPack3D(){
 
         {/* Run */}
         <button onClick={runPack} disabled={busy||activeBoxes.length===0}
-          style={{margin:"8px 12px 0",padding:"20px",background:"var(--color-text-primary)",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
+          style={{margin:"8px 12px 0",padding:"20px",background:activeBoxes.length===0||busy?"var(--color-background-secondary)":"#3b82f6",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
           {busy?"Computing...":activeBoxes.length===0?"Set carton quantities first":"▶  Calculate packing"}
         </button>
 
@@ -372,7 +372,7 @@ export default function BinPack3D(){
         onWheel={onWheel} onContextMenu={e=>e.preventDefault()}>
         <canvas ref={cvRef} style={{display:"block",width:"100%",height:"100%"}}/>
 
-        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:20,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
+        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:15,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
           {CONTAINERS[contType]?.label??"Custom"} &nbsp;·&nbsp; {cont.L}×{cont.W}×{cont.H} cm &nbsp;·&nbsp; {contVolM3} m³
         </div>
 
