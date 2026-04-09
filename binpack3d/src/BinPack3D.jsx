@@ -207,7 +207,7 @@ export default function BinPack3D(){
               </div>
 
               {/* Header row */}
-              <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 64px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
+              <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
                 <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
                 <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>Description</span>
                 <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
@@ -218,7 +218,7 @@ export default function BinPack3D(){
                 const active=b.qty>0;
                 return(
                   <div key={b.id}
-                    style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 64px",gap:4,alignItems:"center",
+                    style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,alignItems:"center",
                       padding:"3px 2px",borderRadius:4,
                       borderLeft:`2px solid ${active?b.col:"var(--color-border-tertiary)"}`,
                       background:active?"var(--color-background-primary)":"transparent",
@@ -246,7 +246,7 @@ export default function BinPack3D(){
                     <div style={{display:"flex",alignItems:"center",gap:2}}>
                       <input type="number" min="0" max="500" value={b.qty}
                         onChange={e=>upBox(b.id,"qty",e.target.value)}
-                        style={{...cellIn({width:36,fontSize:13,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
+                        style={{...cellIn({fontSize:13,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
                     </div>
                   </div>
                 );
