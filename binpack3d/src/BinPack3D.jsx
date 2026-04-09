@@ -89,7 +89,7 @@ export default function BinPack3D(){
   const[busy,setBusy]=useState(false);
   const[tab,setTab]=useState("boxes");
   const cvRef=useRef(),vpRef=useRef();
-  const cam=useRef({rY:.5,rX:.4,zoom:3,pX:0,pY:0});
+  const cam=useRef({rY:.5,rX:.4,zoom:5,pX:0,pY:0});
   const drag=useRef(null),pRef=useRef([]),cRef=useRef([590,235,236]);
 
   const redraw=useCallback(()=>{
