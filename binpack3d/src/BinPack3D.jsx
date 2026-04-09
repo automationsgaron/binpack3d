@@ -89,7 +89,7 @@ export default function BinPack3D(){
   const[busy,setBusy]=useState(false);
   const[tab,setTab]=useState("boxes");
   const cvRef=useRef(),vpRef=useRef();
-  const cam=useRef({rY:.5,rX:.4,zoom:2.2,pX:0,pY:0});
+  const cam=useRef({rY:.5,rX:.4,zoom:3,pX:0,pY:0});
   const drag=useRef(null),pRef=useRef([]),cRef=useRef([590,235,236]);
 
   const redraw=useCallback(()=>{
@@ -164,7 +164,7 @@ export default function BinPack3D(){
               const active=contType===key;
               return(
                 <button key={key} onClick={()=>handleContType(key)}
-                  style={{padding:"5px 4px",fontSize:15,fontFamily:"var(--font-mono)",fontWeight:active?600:400,
+                  style={{padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:active?600:400,
                     background:active?"var(--color-text-primary)":"var(--color-background-secondary)",
                     color:active?"var(--color-background-primary)":"var(--color-text-secondary)",
                     border:"0.5px solid var(--color-border-secondary)",borderRadius:6,cursor:"pointer",lineHeight:1.3,textAlign:"center"}}>
@@ -179,14 +179,14 @@ export default function BinPack3D(){
               <div key={k} style={{display:"flex",flexDirection:"column",gap:2}}>
                 <label style={{fontSize:9,color:"var(--color-text-secondary)"}}>{lbl} (cm)</label>
                 <input type="number" min="1" value={cont[k]} onChange={e=>handleContDim(k,e.target.value)}
-                  style={{fontFamily:"var(--font-mono)",fontSize:12,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
+                  style={{fontFamily:"var(--font-mono)",fontSize:13,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
               </div>
             ))}
           </div>
         </div>
 
         {/* Tabs */}
-        <div style={{display:"flex",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+        <div style={{display:"flex", fontSize:12, borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <button style={ts(tab==="boxes")} onClick={()=>setTab("boxes")}>Cartons</button>
           <button style={ts(tab==="leeway")} onClick={()=>setTab("leeway")}>Leeway %</button>
         </div>
@@ -197,7 +197,7 @@ export default function BinPack3D(){
           {tab==="boxes"&&(
             <div>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <span style={{fontSize:15,color:"var(--color-text-secondary)",letterSpacing:.5}}>
+                <span style={{fontSize:12,color:"var(--color-text-secondary)",letterSpacing:.5}}>
                   SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active
                 </span>
                 <button onClick={resetQty}
@@ -259,7 +259,7 @@ export default function BinPack3D(){
               {/* Active summary */}
               {activeBoxes.length>0&&(
                 <div style={{marginTop:8,padding:"6px 8px",background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:6}}>
-                  <div style={{fontSize:9,color:"var(--color-text-secondary)",marginBottom:4}}>Active cartons — effective dims (+{gl}% leeway)</div>
+                  <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:4}}>Active cartons — effective dims (+{gl}% leeway)</div>
                   {activeBoxes.map(b=>{const{el,ew,eh}=eff(b);return(
                     <div key={b.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"1px 0"}}>
                       <div style={{display:"flex",alignItems:"center",gap:5}}>
@@ -312,7 +312,7 @@ export default function BinPack3D(){
                 return(
                   <div key={b.id} style={{background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderLeft:`2px solid ${b.col}`,borderRadius:8,padding:"8px 10px"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:7}}>
-                      <span style={{fontSize:9,fontWeight:700,color:b.col,background:`${b.col}18`,borderRadius:3,padding:"1px 5px"}}>{b.code}</span>
+                      <span style={{fontSize:13,fontWeight:700,color:b.col,background:`${b.col}18`,borderRadius:3,padding:"1px 5px"}}>{b.code}</span>
                       <span style={{fontWeight:600,fontSize:11,flex:1,color:"var(--color-text-primary)"}}>{b.name}</span>
                     </div>
                     <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:6}}>
