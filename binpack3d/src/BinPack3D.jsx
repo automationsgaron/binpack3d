@@ -246,7 +246,7 @@ export default function BinPack3D(){
                     <div style={{display:"flex",alignItems:"center",gap:2}}>
                       <input type="number" min="0" max="500" value={b.qty}
                         onChange={e=>upBox(b.id,"qty",e.target.value)}
-                        style={{...cellIn({width:72,fontSize:13,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
+                        style={{...cellIn({width:36,fontSize:13,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
                     </div>
                   </div>
                 );
