@@ -210,7 +210,7 @@ export default function BinPack3D(){
               <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
                 <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
                 <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>Description</span>
-                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
+                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty    </span>
               </div>
 
               {/* One compact row per carton type */}
@@ -260,7 +260,7 @@ export default function BinPack3D(){
                     <div key={b.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"1px 0"}}>
                       <div style={{display:"flex",alignItems:"center",gap:5}}>
                         <div style={{width:5,height:5,borderRadius:1,background:b.col,flexShrink:0}}/>
-                        <span style={{fontSize:9,color:"var(--color-text-secondary)"}}>{b.code} · {b.qty}×</span>
+                        <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>{b.code} · {b.qty}×</span>
                       </div>
                       <span style={{fontSize:9,fontWeight:600,color:b.col}}>{el}×{ew}×{eh}</span>
                     </div>
