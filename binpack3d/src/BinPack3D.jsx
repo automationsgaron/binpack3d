@@ -201,7 +201,7 @@ export default function BinPack3D(){
                   SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active
                 </span>
                 <button onClick={resetQty}
-                  style={{fontSize:14,color:"var(--color-text-secondary)",background:"none",border:"0.5px solid var(--color-border-secondary)",borderRadius:4,padding:"2px 7px",cursor:"pointer"}}>
+                  style={{fontSize:11,color:"var(--color-text-secondary)",background:"none",border:"0.5px solid var(--color-border-secondary)",borderRadius:4,padding:"2px 7px",cursor:"pointer"}}>
                   clear all
                 </button>
               </div>
@@ -210,7 +210,7 @@ export default function BinPack3D(){
               <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
                 <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
                 <span style={{fontSize:14,color:"var(--color-text-secondary)"}}>Description</span>
-                <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty    </span>
+                <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty&nbsp;&nbsp;</span>
               </div>
 
               {/* One compact row per carton type */}
@@ -345,12 +345,12 @@ export default function BinPack3D(){
 
         {/* Run */}
         <button onClick={runPack} disabled={busy||activeBoxes.length===0}
-          style={{margin:"8px 12px 0",padding:"20px",background:activeBoxes.length===0||busy?"var(--color-background-secondary)":"#3b82f6",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
+          style={{margin:"8px 12px 0",padding:"15px",background:activeBoxes.length===0||busy?"var(--color-background-secondary)":"#3b82f6",color:"#fff",border:"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
           {busy?"Computing...":activeBoxes.length===0?"Set carton quantities first":"▶  Calculate packing"}
         </button>
 
         {/* Stats */}
-        <div style={{padding:"8px 12px 10px",flexShrink:0}}>
+        <div style={{fontSize:12, padding:"8px 12px 10px",flexShrink:0}}>
           {[["Packed",result?`${result.placed} / ${result.total}`:"—","var(--color-text-primary)"],
             ["Not fitted",result?result.unpacked:"—","var(--color-text-danger,#e24b4a)"],
             ["Utilization",result?`${result.pct.toFixed(1)}%`:"—","var(--color-text-success,#15803d)"]
@@ -385,11 +385,11 @@ export default function BinPack3D(){
         {result&&(
           <div style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 13px",display:"flex",flexDirection:"column",gap:5}}>
             {activeBoxes.map(b=>{const n=pRef.current.filter(p=>p.id===b.id).length;const{lwy}=eff(b);return(
-              <div key={b.id} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(200,220,240,0.85)"}}>
+              <div key={b.id} style={{display:"flex",alignItems:"center",gap:8,fontSize:15,color:"rgba(200,220,240,0.85)"}}>
                 <div style={{width:9,height:9,borderRadius:2,background:b.col,flexShrink:0}}/>
-                <span style={{fontSize:12,fontWeight:700,color:b.col}}>{b.code}</span>
+                <span style={{fontSize:14,fontWeight:700,color:b.col}}>{b.code}</span>
                 <span>{n}/{b.qty}</span>
-                <span style={{fontSize:11,color:"rgba(160,180,200,0.5)"}}>+{lwy}%</span>
+                <span style={{fontSize:13,color:"rgba(160,180,200,0.5)"}}>+{lwy}%</span>
               </div>
             );})}
           </div>
