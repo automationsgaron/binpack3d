@@ -89,7 +89,7 @@ export default function BinPack3D(){
   const[busy,setBusy]=useState(false);
   const[tab,setTab]=useState("boxes");
   const cvRef=useRef(),vpRef=useRef();
-  const cam=useRef({rY:.5,rX:.4,zoom:1,pX:0,pY:0});
+  const cam=useRef({rY:.5,rX:.4,zoom:2.2,pX:0,pY:0});
   const drag=useRef(null),pRef=useRef([]),cRef=useRef([590,235,236]);
 
   const redraw=useCallback(()=>{
@@ -135,7 +135,6 @@ export default function BinPack3D(){
       const pct=usedV/(cont.L*cont.W*cont.H)*100;
       setResult({placed:placed.length,total:items.length,unpacked:unpacked.length,pct});
       pRef.current=placed;cRef.current=[cont.L,cont.W,cont.H];
-      cam.current={rY:.5,rX:.4,zoom:1,pX:0,pY:0};
       redraw();setBusy(false);
     },10);
   };
@@ -150,7 +149,7 @@ export default function BinPack3D(){
     <div style={{display:"flex",height:"100vh",border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
 
       {/* ── Sidebar ── */}
-      <div style={{width:300,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
+      <div style={{width:380,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
 
         <div style={{padding:"10px 14px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
           <div style={{fontSize:14,fontWeight:600,color:"var(--color-text-primary)"}}>BinPack 3D</div>
@@ -208,10 +207,10 @@ export default function BinPack3D(){
               </div>
 
               {/* Header row */}
-              <div style={{display:"grid",gridTemplateColumns:"28px minmax(0,1fr) 50px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
-                <span style={{fontSize:9,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
-                <span style={{fontSize:9,color:"var(--color-text-secondary)"}}>Description</span>
-                <span style={{fontSize:9,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
+              <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 64px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
+                <span style={{fontSize:11,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
+                <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>Description</span>
+                <span style={{fontSize:11,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
               </div>
 
               {/* One compact row per carton type */}
@@ -219,14 +218,14 @@ export default function BinPack3D(){
                 const active=b.qty>0;
                 return(
                   <div key={b.id}
-                    style={{display:"grid",gridTemplateColumns:"28px minmax(0,1fr) 50px",gap:4,alignItems:"center",
+                    style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 64px",gap:4,alignItems:"center",
                       padding:"3px 2px",borderRadius:4,
                       borderLeft:`2px solid ${active?b.col:"var(--color-border-tertiary)"}`,
                       background:active?"var(--color-background-primary)":"transparent",
                       transition:"border-color .15s,background .15s"}}>
 
                     {/* Code badge */}
-                    <div style={{textAlign:"center",fontSize:9,fontWeight:600,
+                    <div style={{textAlign:"center",fontSize:11,fontWeight:600,
                       color:active?b.col:"var(--color-text-secondary)",
                       background:active?`${b.col}18`:"transparent",
                       borderRadius:3,padding:"1px 0"}}>
@@ -235,10 +234,10 @@ export default function BinPack3D(){
 
                     {/* Description + dims */}
                     <div style={{minWidth:0}}>
-                      <div style={{fontSize:10,fontWeight:active?600:400,color:active?"var(--color-text-primary)":"var(--color-text-secondary)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                      <div style={{fontSize:13,fontWeight:active?600:400,color:active?"var(--color-text-primary)":"var(--color-text-secondary)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
                         {b.name}
                       </div>
-                      <div style={{fontSize:8,color:"var(--color-text-secondary)",marginTop:1}}>
+                      <div style={{fontSize:11,color:"var(--color-text-secondary)",marginTop:1}}>
                         {b.l}×{b.w}×{b.h} cm
                       </div>
                     </div>
@@ -246,12 +245,12 @@ export default function BinPack3D(){
                     {/* Qty spinner */}
                     <div style={{display:"flex",alignItems:"center",gap:2}}>
                       <button onClick={()=>upBox(b.id,"qty",Math.max(0,b.qty-1))}
-                        style={{width:16,height:20,background:"var(--color-background-secondary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,cursor:"pointer",color:"var(--color-text-secondary)",fontSize:12,lineHeight:1,padding:0,flexShrink:0}}>−</button>
+                        style={{width:20,height:24,background:"var(--color-background-secondary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,cursor:"pointer",color:"var(--color-text-secondary)",fontSize:14,lineHeight:1,padding:0,flexShrink:0}}>−</button>
                       <input type="number" min="0" max="500" value={b.qty}
                         onChange={e=>upBox(b.id,"qty",e.target.value)}
-                        style={{...cellIn({width:28,fontSize:11,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
+                        style={{...cellIn({width:36,fontSize:13,fontWeight:active?600:400,background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,padding:"1px 2px",color:active?b.col:"var(--color-text-secondary)"})}}/>
                       <button onClick={()=>upBox(b.id,"qty",b.qty+1)}
-                        style={{width:16,height:20,background:"var(--color-background-secondary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,cursor:"pointer",color:"var(--color-text-secondary)",fontSize:12,lineHeight:1,padding:0,flexShrink:0}}>+</button>
+                        style={{width:20,height:24,background:"var(--color-background-secondary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:3,cursor:"pointer",color:"var(--color-text-secondary)",fontSize:14,lineHeight:1,padding:0,flexShrink:0}}>+</button>
                     </div>
                   </div>
                 );
@@ -388,13 +387,13 @@ export default function BinPack3D(){
           </div>
         )}
         {result&&(
-          <div style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"7px 11px",display:"flex",flexDirection:"column",gap:4}}>
+          <div style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 13px",display:"flex",flexDirection:"column",gap:5}}>
             {activeBoxes.map(b=>{const n=pRef.current.filter(p=>p.id===b.id).length;const{lwy}=eff(b);return(
-              <div key={b.id} style={{display:"flex",alignItems:"center",gap:7,fontSize:10,color:"rgba(200,220,240,0.85)"}}>
-                <div style={{width:7,height:7,borderRadius:2,background:b.col,flexShrink:0}}/>
-                <span style={{fontSize:9,fontWeight:700,color:b.col}}>{b.code}</span>
+              <div key={b.id} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(200,220,240,0.85)"}}>
+                <div style={{width:9,height:9,borderRadius:2,background:b.col,flexShrink:0}}/>
+                <span style={{fontSize:12,fontWeight:700,color:b.col}}>{b.code}</span>
                 <span>{n}/{b.qty}</span>
-                <span style={{fontSize:9,color:"rgba(160,180,200,0.4)"}}>+{lwy}%</span>
+                <span style={{fontSize:11,color:"rgba(160,180,200,0.5)"}}>+{lwy}%</span>
               </div>
             );})}
           </div>
