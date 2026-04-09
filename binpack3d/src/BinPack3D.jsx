@@ -345,7 +345,7 @@ export default function BinPack3D(){
 
         {/* Run */}
         <button onClick={runPack} disabled={busy||activeBoxes.length===0}
-          style={{margin:"8px 12px 0",padding:"10px",background:"var(--color-text-primary)",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:12,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
+          style={{margin:"8px 12px 0",padding:"20px",background:"var(--color-text-primary)",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:12,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
           {busy?"Computing...":activeBoxes.length===0?"Set carton quantities first":"▶  Calculate packing"}
         </button>
 
@@ -372,7 +372,7 @@ export default function BinPack3D(){
         onWheel={onWheel} onContextMenu={e=>e.preventDefault()}>
         <canvas ref={cvRef} style={{display:"block",width:"100%",height:"100%"}}/>
 
-        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:10,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
+        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:20,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
           {CONTAINERS[contType]?.label??"Custom"} &nbsp;·&nbsp; {cont.L}×{cont.W}×{cont.H} cm &nbsp;·&nbsp; {contVolM3} m³
         </div>
 
