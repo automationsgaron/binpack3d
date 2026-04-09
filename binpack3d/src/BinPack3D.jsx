@@ -146,25 +146,25 @@ export default function BinPack3D(){
   const cellIn=(extra={})=>({fontFamily:"var(--font-mono)",fontSize:11,padding:"2px 3px",border:"none",borderRadius:3,width:"100%",textAlign:"center",background:"transparent",color:"var(--color-text-primary)",outline:"none",...extra});
 
   return(
-    <div style={{display:"flex",height:"100vh",border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
+    <div style={{display:"flex",height:"100vh",fontFamily:"'Space Mono', monospace", border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
 
       {/* ── Sidebar ── */}
       <div style={{width:380,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
 
         <div style={{padding:"10px 14px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
-          <div style={{fontSize:14,fontWeight:600,color:"var(--color-text-primary)"}}>BinPack 3D</div>
-          <div style={{fontSize:10,color:"var(--color-text-secondary)",marginTop:2}}>container loading optimizer</div>
+          <div style={{fontSize:20,fontWeight:600,color:"var(--color-text-primary)"}}>BinPack 3D</div>
+          <div style={{fontSize:12,color:"var(--color-text-secondary)",marginTop:2}}>container loading optimizer</div>
         </div>
 
         {/* Container selector */}
         <div style={{padding:"9px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
-          <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>CONTAINER TYPE</div>
+          <div style={{fontSize:15,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>CONTAINER TYPE</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4,marginBottom:8}}>
             {Object.entries(CONTAINERS).map(([key,ct])=>{
               const active=contType===key;
               return(
                 <button key={key} onClick={()=>handleContType(key)}
-                  style={{padding:"5px 4px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:active?600:400,
+                  style={{padding:"5px 4px",fontSize:15,fontFamily:"var(--font-mono)",fontWeight:active?600:400,
                     background:active?"var(--color-text-primary)":"var(--color-background-secondary)",
                     color:active?"var(--color-background-primary)":"var(--color-text-secondary)",
                     border:"0.5px solid var(--color-border-secondary)",borderRadius:6,cursor:"pointer",lineHeight:1.3,textAlign:"center"}}>
@@ -179,7 +179,7 @@ export default function BinPack3D(){
               <div key={k} style={{display:"flex",flexDirection:"column",gap:2}}>
                 <label style={{fontSize:9,color:"var(--color-text-secondary)"}}>{lbl} (cm)</label>
                 <input type="number" min="1" value={cont[k]} onChange={e=>handleContDim(k,e.target.value)}
-                  style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
+                  style={{fontFamily:"var(--font-mono)",fontSize:12,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
               </div>
             ))}
           </div>
@@ -197,7 +197,7 @@ export default function BinPack3D(){
           {tab==="boxes"&&(
             <div>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <span style={{fontSize:10,color:"var(--color-text-secondary)",letterSpacing:.5}}>
+                <span style={{fontSize:15,color:"var(--color-text-secondary)",letterSpacing:.5}}>
                   SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active
                 </span>
                 <button onClick={resetQty}
@@ -208,9 +208,9 @@ export default function BinPack3D(){
 
               {/* Header row */}
               <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 64px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)",marginBottom:2}}>
-                <span style={{fontSize:11,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
-                <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>Description</span>
-                <span style={{fontSize:11,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
+                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
+                <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>Description</span>
+                <span style={{fontSize:12,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
               </div>
 
               {/* One compact row per carton type */}
