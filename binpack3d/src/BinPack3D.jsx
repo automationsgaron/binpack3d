@@ -345,7 +345,7 @@ export default function BinPack3D(){
 
         {/* Run */}
         <button onClick={runPack} disabled={busy||activeBoxes.length===0}
-          style={{margin:"8px 12px 0",padding:"20px",background:"var(--color-text-primary)",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:12,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
+          style={{margin:"8px 12px 0",padding:"20px",background:"var(--color-text-primary)",color:"var(--color-background-primary)",border:"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:activeBoxes.length===0?"not-allowed":"pointer",opacity:(busy||activeBoxes.length===0)?.45:1}}>
           {busy?"Computing...":activeBoxes.length===0?"Set carton quantities first":"▶  Calculate packing"}
         </button>
 
