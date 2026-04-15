@@ -338,7 +338,7 @@ export default function BinPack3D(){
         </div>
 
         {/* Shipping mode */}
-        <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+        <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>SHIPPING MODE</div>
           <div style={{display:"flex",gap:4}}>
             <button style={modeBtn(mode==="container")} onClick={()=>setMode("container")}>📦 Container (FCL)</button>
@@ -378,7 +378,7 @@ export default function BinPack3D(){
         )}
 
         {/* Input mode */}
-        <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+        <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>INPUT MODE</div>
           <div style={{display:"flex",gap:4}}>
             <button style={inputBtn(inputMode==="skus")}    onClick={()=>setInputMode("skus")}>SKUs (by units)</button>
@@ -447,7 +447,7 @@ export default function BinPack3D(){
         <div style={{flexShrink:0,borderTop:"0.5px solid var(--color-border-tertiary)",maxHeight:"45vh",overflowY:"auto"}}>
 
           {/* Leeway */}
-          <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+          <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
               <span style={{fontSize:10,color:"var(--color-text-secondary)",letterSpacing:.5,flex:1}}>CARTON LEEWAY</span>
               <span style={{fontSize:10,color:lcol,fontWeight:600}}>{gl}%</span>
