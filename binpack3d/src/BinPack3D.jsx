@@ -360,7 +360,6 @@ export default function BinPack3D(){
                 </div>
               ))}
             </div>
-            <div style={{marginTop:5,fontSize:10,color:"var(--color-text-secondary)"}}>Volume: {contVolM3} m³</div>
           </div>
         ):(
           <div style={{padding:"9px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
