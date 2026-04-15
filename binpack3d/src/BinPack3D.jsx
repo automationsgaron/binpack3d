@@ -332,7 +332,7 @@ export default function BinPack3D(){
       <div style={{width:400,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
 
         {/* Header */}
-        <div style={{padding:"10px 14px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+        <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
           <div style={{fontSize:20,fontWeight:600,color:"var(--color-text-primary)"}}>BinPack 3D</div>
           <div style={{fontSize:11,color:"var(--color-text-secondary)",marginTop:2}}>SEAPA container &amp; pallet loading optimizer</div>
         </div>
@@ -348,7 +348,7 @@ export default function BinPack3D(){
 
         {/* Container / Pallet config */}
         {mode==="container"?(
-          <div style={{padding:"9px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+          <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>CONTAINER TYPE</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4,marginBottom:8}}>
               {Object.entries(CONTAINERS).map(([key,ct])=>{const a=contType===key;return(<button key={key} onClick={()=>handleContType(key)} style={{padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3}}>{ct.label}</button>);})}
@@ -362,7 +362,7 @@ export default function BinPack3D(){
             </div>
           </div>
         ):(
-          <div style={{padding:"9px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
+          <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>PALLET TYPE</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:4,marginBottom:8}}>
               {Object.entries(PALLETS).map(([key,pt])=>{const a=palletType===key;return(<button key={key} onClick={()=>handlePalletType(key)} style={{padding:"5px 3px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3}}>{pt.label}</button>);})}
