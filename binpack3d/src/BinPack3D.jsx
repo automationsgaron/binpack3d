@@ -323,7 +323,7 @@ export default function BinPack3D(){
   const lcol=gl<=5?"#22c55e":gl<=15?"#f59e0b":"#ef4444";
   const contVolM3=((cont.L*cont.W*cont.H)/1e6).toFixed(1);
   const modeBtn=a=>({flex:1,padding:"7px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
-  const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"var(--color-text-primary)":"var(--color-background-secondary)",color:a?"var(--color-background-primary)":"var(--color-text-secondary)",border:`0.5px solid ${a?"var(--color-text-primary)":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
+  const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400, background:a?"#3b82f6":"var(--color-background-secondary)", color:a?"#fff":"var(--color-text-secondary)", border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`, borderRadius:6,cursor:"pointer",transition:"all .15s"});
 
   return(
     <div style={{display:"flex",height:"100vh",border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
@@ -445,7 +445,7 @@ export default function BinPack3D(){
         </div>
 
         {/* ── Bottom panel: Leeway + Summary + Run + Stats ── */}
-        <div style={{flexShrink:0,borderTop:"0.5px solid var(--color-border-tertiary)"}}>
+        <div style={{flexShrink:0,borderTop:"0.5px solid var(--color-border-tertiary)",maxHeight:"45vh",overflowY:"auto"}}>
 
           {/* Leeway */}
           <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
