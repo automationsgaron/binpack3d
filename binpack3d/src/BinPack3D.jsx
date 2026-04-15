@@ -39,10 +39,10 @@ const CONTAINERS = {
 };
 
 const PALLETS = {
-  au:    {label:"AU 116×116", L:116, W:116, maxH:180, maxWt:1000},
-  eur:   {label:"EUR 120×80", L:120, W:80,  maxH:180, maxWt:800},
-  us:    {label:"US 122×102", L:122, W:102, maxH:180, maxWt:1000},
-  custom:{label:"Custom",     L:116, W:116, maxH:180, maxWt:1000},
+  au:    {label:"AU 116×116", L:116, W:116, maxH:180, maxWt:1000, palletWt:25},
+  eur:   {label:"EUR 120×80", L:120, W:80,  maxH:180, maxWt:800, palletWt:20},
+  us:    {label:"US 122×102", L:122, W:102, maxH:180, maxWt:1000, palletWt:27},
+  custom:{label:"Custom",     L:116, W:116, maxH:180, maxWt:1000, palletWt:25},
 };
 
 const SKUS = [
@@ -224,7 +224,7 @@ export default function BinPack3D(){
   const[contType,  setContType]  = useState("c20ft");
   const[cont,      setCont]      = useState({L:590,W:235,H:236});
   const[palletType,setPalletType]= useState("au");
-  const[pallet,    setPallet]    = useState({L:116,W:116,maxH:180,maxWt:1000});
+  const[pallet,    setPallet]    = useState({L:116,W:116,maxH:180,maxWt:1000,palletWt:25});
   const[gl,        setGl]        = useState(5);
   const[skuOrders, setSkuOrders] = useState({});
   const[boxes,     setBoxes]     = useState(makeBoxes());
@@ -297,7 +297,7 @@ export default function BinPack3D(){
 
   const handleContType=key=>{setContType(key);if(key!=="custom")setCont({L:CONTAINERS[key].L,W:CONTAINERS[key].W,H:CONTAINERS[key].H});};
   const handleContDim=(k,v)=>{setContType("custom");setCont(c=>({...c,[k]:+v}));};
-  const handlePalletType=key=>{setPalletType(key);if(key!=="custom")setPallet({L:PALLETS[key].L,W:PALLETS[key].W,maxH:PALLETS[key].maxH,maxWt:PALLETS[key].maxWt});};
+  const handlePalletType=key=>{setPalletType(key);if(key!=="custom")setPallet({L:PALLETS[key].L,W:PALLETS[key].W,maxH:PALLETS[key].maxH,maxWt:PALLETS[key].maxWt,palletWt:PALLETS[key].palletWt});};
   const handlePalletDim=(k,v)=>{setPalletType("custom");setPallet(p=>({...p,[k]:+v}));};
   const setOrder=(sku,val)=>{const n=val===""?0:Math.max(0,parseInt(val)||0);setSkuOrders(prev=>n===0?Object.fromEntries(Object.entries(prev).filter(([k])=>k!==sku)):{...prev,[sku]:n});};
   const upBox=(id,f,v)=>setBoxes(bs=>bs.map(b=>b.id!==id?b:{...b,[f]:f==="name"?v:(v===""||v===null?null:Math.max(0,+v))}));
@@ -313,8 +313,11 @@ export default function BinPack3D(){
         pRef.current=placed;cRef.current=[cont.L,cont.W,cont.H];palletsRef.current=[];
       } else {
         const{pallets,unplaced}=solvePallets(pallet.L,pallet.W,pallet.maxH,pallet.maxWt,cartonItems);
-        setResult({type:"pallet",palletCount:pallets.length,totalCartons:cartonItems.length,totalWt:pallets.reduce((s,p)=>s+p.weight,0),totalVol:cartonItems.reduce((s,i)=>s+i.eL*i.eW*i.eH,0)/1e6,unplaced});
-        palletsRef.current=pallets;palletRef.current=[pallet.L,pallet.W,pallet.maxH];pRef.current=[];
+        const itemWt=pallets.reduce((s,p)=>s+p.weight,0);
+        setResult({type:"pallet",palletCount:pallets.length,totalCartons:cartonItems.length,
+          totalItemWt:itemWt,
+          totalWt:itemWt+(pallets.length*pallet.palletWt),
+          totalVol:cartonItems.reduce((s,i)=>s+i.eL*i.eW*i.eH,0)/1e6,unplaced});
       }
       redraw();setBusy(false);
     },10);
@@ -498,7 +501,8 @@ export default function BinPack3D(){
                 {[["Packed",      result?.type==="container"?`${result.placed} / ${result.total}`:"—",                                                                                "var(--color-text-primary)"],
                   ["Not fitted",  result?.type==="container"?result.unpacked:"—",                                                                                                    "var(--color-text-danger,#e24b4a)"],
                   ["Utilization", result?.type==="container"?`${result.pct.toFixed(1)}%`:"—",                                                                                        "var(--color-text-success,#15803d)"],
-                  ["Total weight",result?.type==="container"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
+                  ["Item weight",    result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
+                  ["Gross w/pallets",result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",       "var(--color-text-secondary)"],
                 ].map(([l,v,c])=>(
                   <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                     <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
