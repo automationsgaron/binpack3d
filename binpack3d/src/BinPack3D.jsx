@@ -501,8 +501,7 @@ export default function BinPack3D(){
                 {[["Packed",      result?.type==="container"?`${result.placed} / ${result.total}`:"—",                                                                                "var(--color-text-primary)"],
                   ["Not fitted",  result?.type==="container"?result.unpacked:"—",                                                                                                    "var(--color-text-danger,#e24b4a)"],
                   ["Utilization", result?.type==="container"?`${result.pct.toFixed(1)}%`:"—",                                                                                        "var(--color-text-success,#15803d)"],
-                  ["Item weight",    result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
-                  ["Gross w/pallets",result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",       "var(--color-text-secondary)"],
+                  ["Total weight",result?.type==="container"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
                 ].map(([l,v,c])=>(
                   <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                     <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
@@ -515,9 +514,10 @@ export default function BinPack3D(){
             ):(
               [["Pallets needed",   result?.type==="pallet"?result.palletCount:"—",                                                                                                  "#3b82f6"],
                ["Total cartons",    result?.type==="pallet"?result.totalCartons:"—",                                                                                                 "var(--color-text-primary)"],
-               ["Total weight",     result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
+               ["Item weight",      result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—",           "var(--color-text-secondary)"],
+               ["Gross w/pallets",  result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
                ["Total volume",     result?.type==="pallet"?`${result.totalVol.toFixed(3)} m³`:"—",                                                                                 "var(--color-text-secondary)"],
-               ["Unplaced cartons", result?.type==="pallet"?result.unplaced:"—",                                                                                                    "var(--color-text-danger,#e24b4a)"],
+               ["Unplaced cartons", result?.type==="pallet"?result.unplaced:"—",                                                                                                     "var(--color-text-danger,#e24b4a)"],
               ].map(([l,v,c])=>(
                 <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                   <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
