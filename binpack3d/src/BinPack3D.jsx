@@ -535,7 +535,7 @@ export default function BinPack3D(){
         <canvas ref={cvRef} style={{display:"block",width:"100%",height:"100%"}}/>
 
         <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:15,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
-          {mode==="container"?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`:`${PALLETS[palletType]?.label??"Custom"} · wt ${pallet.palletWt} cm · max ${pallet.maxH} cm · max ${pallet.maxWt} kg`}
+          {mode==="container"?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`:`${PALLETS[palletType]?.label??"Custom"} · wt ${pallet.palletWt} kg · max ${pallet.maxH} cm · max ${pallet.maxWt} kg`}
         </div>
 
         {!result&&(
