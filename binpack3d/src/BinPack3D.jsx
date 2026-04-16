@@ -38,73 +38,76 @@ const CONTAINERS = {
   custom:{label:"Custom",         L:590,  W:235, H:236},
 };
 
+// maxH = total stack height including pallet board.
+// palletThickness = board height subtracted before cargo solve.
+// Cargo space available to solver = maxH - palletThickness.
 const PALLETS = {
-  au:    {label:"AU 116×116", L:116, W:116, maxH:180, maxWt:1000, palletWt:25},
-  eur:   {label:"EUR 120×80", L:120, W:80,  maxH:180, maxWt:800, palletWt:20},
-  us:    {label:"US 122×102", L:122, W:102, maxH:180, maxWt:1000, palletWt:27},
-  custom:{label:"Custom",     L:116, W:116, maxH:180, maxWt:1000, palletWt:25},
+  au:    {label:"AU 120×120", L:120, W:120, maxH:180, maxWt:1000, palletWt:20, palletThickness:15},
+  eur:   {label:"EUR 120×80", L:120, W:80,  maxH:180, maxWt:800,  palletWt:20, palletThickness:14},
+  us:    {label:"US 122×102", L:122, W:102, maxH:180, maxWt:1000, palletWt:27, palletThickness:14},
+  custom:{label:"Custom",     L:116, W:116, maxH:180, maxWt:1000, palletWt:25, palletThickness:15},
 };
 
 const SKUS = [
-  {sku:"1011",desc:"15L Tube 3mm",       cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:15.60,cpp:24},
-  {sku:"1012",desc:"15L Tube 6mm",       cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:14.80,cpp:24},
-  {sku:"1013",desc:"15L Tube 12mm",      cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:12.10,cpp:24},
-  {sku:"1014",desc:"15L Tube 20mm",      cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:10.90,cpp:24},
-  {sku:"1022",desc:"GTX Tube 6mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"GTX20",cartonWt:17.60,cpp:24},
-  {sku:"1023",desc:"GTX Tube 12mm",      cat:"Basket Tubes",    packSize:20,   cartonType:"GTX20",cartonWt:15.70,cpp:24},
-  {sku:"1033",desc:"25L Tube 12mm",      cat:"Basket Tubes",    packSize:20,   cartonType:"B",    cartonWt:14.37,cpp:12},
-  {sku:"1034",desc:"25L Tube 20mm",      cat:"Basket Tubes",    packSize:20,   cartonType:"B",    cartonWt:15.20,cpp:12},
-  {sku:"1043",desc:"34L Tube 12mm",      cat:"Basket Tubes",    packSize:20,   cartonType:"C",    cartonWt:17.70,cpp:10},
-  {sku:"1044",desc:"34L Tube 20mm",      cat:"Basket Tubes",    packSize:20,   cartonType:"C",    cartonWt:18.40,cpp:10},
-  {sku:"1053",desc:"45L Tube 12mm",      cat:"Basket Tubes",    packSize:10,   cartonType:"D",    cartonWt:10.50,cpp:8},
-  {sku:"1054",desc:"45L Tube 20mm",      cat:"Basket Tubes",    packSize:10,   cartonType:"D",    cartonWt:12.30,cpp:8},
-  {sku:"2112",desc:"SL 600 EC 6mm",      cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.70,cpp:12},
-  {sku:"2113",desc:"SL 600 EC 12mm",     cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.50,cpp:12},
-  {sku:"2114",desc:"SL 600 EC 20mm",     cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.20,cpp:12},
-  {sku:"2122",desc:"GTX 600 EC 6mm",     cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:11.20,cpp:20},
-  {sku:"2123",desc:"GTX 600 EC 12mm",    cat:"End Caps",        packSize:100,  cartonType:"F",    cartonWt:9.60, cpp:20},
-  {sku:"2411",desc:"Prem 600 EC 3mm",    cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.60,cpp:12},
-  {sku:"2412",desc:"Prem 600 EC 6mm",    cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:20.50,cpp:12},
-  {sku:"2413",desc:"Prem 600 EC 12mm",   cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.30,cpp:12},
-  {sku:"2414",desc:"Prem 600 EC 20mm",   cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.50,cpp:12},
-  {sku:"2513",desc:"SL 800 EC 12mm",     cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:9.90, cpp:12},
-  {sku:"2514",desc:"SL 800 EC 20mm",     cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:9.40, cpp:12},
-  {sku:"2533",desc:"Prem 800 EC 12mm",   cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:12.50,cpp:12},
-  {sku:"2534",desc:"Prem 800 EC 20mm",   cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:12.60,cpp:12},
-  {sku:"3110",desc:"SL 600 Blank",       cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:18.40,cpp:12},
-  {sku:"3112",desc:"SL 600 w/Door 6mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.50,cpp:12},
-  {sku:"3113",desc:"SL 600 w/Door 12mm", cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:15.70,cpp:12},
-  {sku:"3114",desc:"SL 600 w/Door 20mm", cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.10,cpp:12},
-  {sku:"3122",desc:"GTX 600 w/Door 6mm", cat:"End Caps (Door)", packSize:100,  cartonType:"H",    cartonWt:19.40,cpp:12},
-  {sku:"3123",desc:"GTX 600 w/Door 12mm",cat:"End Caps (Door)", packSize:100,  cartonType:"H",    cartonWt:17.70,cpp:12},
-  {sku:"3312",desc:"SL IL 600 w/D 6mm",  cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:16.60,cpp:10},
-  {sku:"3313",desc:"SL IL 600 w/D 12mm", cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:16.40,cpp:10},
-  {sku:"3314",desc:"SL IL 600 w/D 20mm", cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:15.70,cpp:10},
-  {sku:"3322",desc:"SL Float EC 6mm",    cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:17.30,cpp:12},
-  {sku:"3323",desc:"SL Float EC 12mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.70,cpp:12},
-  {sku:"3324",desc:"SL Float EC 20mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.90,cpp:12},
-  {sku:"3411",desc:"Prem 600 w/D 3mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:25.60,cpp:12},
-  {sku:"3412",desc:"Prem 600 w/D 6mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:24.80,cpp:12},
-  {sku:"3413",desc:"Prem 600 w/D 12mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:23.80,cpp:12},
-  {sku:"3414",desc:"Prem 600 w/D 20mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:23.90,cpp:12},
-  {sku:"3513",desc:"SL 800 w/D 12mm",    cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:14.50,cpp:12},
-  {sku:"3514",desc:"SL 800 w/D 20mm",    cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:14.10,cpp:12},
-  {sku:"3533",desc:"Prem 800 w/D 12mm",  cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:16.10,cpp:12},
-  {sku:"3534",desc:"Prem 800 w/D 20mm",  cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:15.80,cpp:12},
-  {sku:"5001",desc:"Standard Post Riser",cat:"Post Risers",     packSize:1000, cartonType:"I",    cartonWt:12.80,cpp:48},
-  {sku:"5100",desc:"Wide Body Riser 11mm",cat:"Post Risers",    packSize:800,  cartonType:"I",    cartonWt:15.70,cpp:48},
-  {sku:"5101",desc:"Wide Body Riser 13mm",cat:"Post Risers",    packSize:800,  cartonType:"I",    cartonWt:13.90,cpp:48},
-  {sku:"4101",desc:"Basket Clip 10.8mm",  cat:"Basket Clips",   packSize:500,  cartonType:"I",    cartonWt:13.50,cpp:48},
-  {sku:"4121",desc:"30mm Solid 600 Rot",  cat:"Basket Clips",   packSize:120,  cartonType:"I",    cartonWt:8.00, cpp:48},
-  {sku:"4123",desc:"30mm Solid 800 Rot",  cat:"Basket Clips",   packSize:120,  cartonType:"I",    cartonWt:8.10, cpp:48},
-  {sku:"4210",desc:"Ext Clip 9mm",        cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:11.10,cpp:48},
-  {sku:"4211",desc:"Ext Clip 10.8mm",     cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:11.20,cpp:48},
-  {sku:"4310",desc:"Univ Clip 0° 9mm",    cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:13.30,cpp:48},
-  {sku:"4311",desc:"Univ Clip 0° 10.8mm", cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:11.40,cpp:48},
-  {sku:"4410",desc:"Univ Clip 90° 9mm",   cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:13.70,cpp:48},
+  {sku:"1011",desc:"15L Tube 3mm",        cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:15.60,cpp:24},
+  {sku:"1012",desc:"15L Tube 6mm",        cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:14.80,cpp:24},
+  {sku:"1013",desc:"15L Tube 12mm",       cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:12.10,cpp:24},
+  {sku:"1014",desc:"15L Tube 20mm",       cat:"Basket Tubes",    packSize:25,   cartonType:"A",    cartonWt:10.90,cpp:24},
+  {sku:"1022",desc:"GTX Tube 6mm",        cat:"Basket Tubes",    packSize:20,   cartonType:"GTX20",cartonWt:17.60,cpp:24},
+  {sku:"1023",desc:"GTX Tube 12mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"GTX20",cartonWt:15.70,cpp:24},
+  {sku:"1033",desc:"25L Tube 12mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"B",    cartonWt:14.37,cpp:12},
+  {sku:"1034",desc:"25L Tube 20mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"B",    cartonWt:15.20,cpp:12},
+  {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"C",    cartonWt:17.70,cpp:10},
+  {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,   cartonType:"C",    cartonWt:18.40,cpp:10},
+  {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,   cartonType:"D",    cartonWt:10.50,cpp:8},
+  {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,   cartonType:"D",    cartonWt:12.30,cpp:8},
+  {sku:"2112",desc:"SL 600 EC 6mm",       cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.70,cpp:12},
+  {sku:"2113",desc:"SL 600 EC 12mm",      cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.50,cpp:12},
+  {sku:"2114",desc:"SL 600 EC 20mm",      cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:10.20,cpp:12},
+  {sku:"2122",desc:"GTX 600 EC 6mm",      cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:11.20,cpp:20},
+  {sku:"2123",desc:"GTX 600 EC 12mm",     cat:"End Caps",        packSize:100,  cartonType:"F",    cartonWt:9.60, cpp:20},
+  {sku:"2411",desc:"Prem 600 EC 3mm",     cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.60,cpp:12},
+  {sku:"2412",desc:"Prem 600 EC 6mm",     cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:20.50,cpp:12},
+  {sku:"2413",desc:"Prem 600 EC 12mm",    cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.30,cpp:12},
+  {sku:"2414",desc:"Prem 600 EC 20mm",    cat:"End Caps",        packSize:100,  cartonType:"E",    cartonWt:19.50,cpp:12},
+  {sku:"2513",desc:"SL 800 EC 12mm",      cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:9.90, cpp:12},
+  {sku:"2514",desc:"SL 800 EC 20mm",      cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:9.40, cpp:12},
+  {sku:"2533",desc:"Prem 800 EC 12mm",    cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:12.50,cpp:12},
+  {sku:"2534",desc:"Prem 800 EC 20mm",    cat:"End Caps",        packSize:40,   cartonType:"G",    cartonWt:12.60,cpp:12},
+  {sku:"3110",desc:"SL 600 Blank",        cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:18.40,cpp:12},
+  {sku:"3112",desc:"SL 600 w/Door 6mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.50,cpp:12},
+  {sku:"3113",desc:"SL 600 w/Door 12mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:15.70,cpp:12},
+  {sku:"3114",desc:"SL 600 w/Door 20mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.10,cpp:12},
+  {sku:"3122",desc:"GTX 600 w/Door 6mm",  cat:"End Caps (Door)", packSize:100,  cartonType:"H",    cartonWt:19.40,cpp:12},
+  {sku:"3123",desc:"GTX 600 w/Door 12mm", cat:"End Caps (Door)", packSize:100,  cartonType:"H",    cartonWt:17.70,cpp:12},
+  {sku:"3312",desc:"SL IL 600 w/D 6mm",   cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:16.60,cpp:10},
+  {sku:"3313",desc:"SL IL 600 w/D 12mm",  cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:16.40,cpp:10},
+  {sku:"3314",desc:"SL IL 600 w/D 20mm",  cat:"End Caps (Door)", packSize:90,   cartonType:"E",    cartonWt:15.70,cpp:10},
+  {sku:"3322",desc:"SL Float EC 6mm",     cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:17.30,cpp:12},
+  {sku:"3323",desc:"SL Float EC 12mm",    cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.70,cpp:12},
+  {sku:"3324",desc:"SL Float EC 20mm",    cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:16.90,cpp:12},
+  {sku:"3411",desc:"Prem 600 w/D 3mm",    cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:25.60,cpp:12},
+  {sku:"3412",desc:"Prem 600 w/D 6mm",    cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:24.80,cpp:12},
+  {sku:"3413",desc:"Prem 600 w/D 12mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:23.80,cpp:12},
+  {sku:"3414",desc:"Prem 600 w/D 20mm",   cat:"End Caps (Door)", packSize:100,  cartonType:"E",    cartonWt:23.90,cpp:12},
+  {sku:"3513",desc:"SL 800 w/D 12mm",     cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:14.50,cpp:12},
+  {sku:"3514",desc:"SL 800 w/D 20mm",     cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:14.10,cpp:12},
+  {sku:"3533",desc:"Prem 800 w/D 12mm",   cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:16.10,cpp:12},
+  {sku:"3534",desc:"Prem 800 w/D 20mm",   cat:"End Caps (Door)", packSize:40,   cartonType:"G",    cartonWt:15.80,cpp:12},
+  {sku:"5001",desc:"Standard Post Riser", cat:"Post Risers",     packSize:1000, cartonType:"I",    cartonWt:12.80,cpp:48},
+  {sku:"5100",desc:"Wide Body Riser 11mm",cat:"Post Risers",     packSize:800,  cartonType:"I",    cartonWt:15.70,cpp:48},
+  {sku:"5101",desc:"Wide Body Riser 13mm",cat:"Post Risers",     packSize:800,  cartonType:"I",    cartonWt:13.90,cpp:48},
+  {sku:"4101",desc:"Basket Clip 10.8mm",  cat:"Basket Clips",    packSize:500,  cartonType:"I",    cartonWt:13.50,cpp:48},
+  {sku:"4121",desc:"30mm Solid 600 Rot",  cat:"Basket Clips",    packSize:120,  cartonType:"I",    cartonWt:8.00, cpp:48},
+  {sku:"4123",desc:"30mm Solid 800 Rot",  cat:"Basket Clips",    packSize:120,  cartonType:"I",    cartonWt:8.10, cpp:48},
+  {sku:"4210",desc:"Ext Clip 9mm",        cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:11.10,cpp:48},
+  {sku:"4211",desc:"Ext Clip 10.8mm",     cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:11.20,cpp:48},
+  {sku:"4310",desc:"Univ Clip 0° 9mm",   cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:13.30,cpp:48},
+  {sku:"4311",desc:"Univ Clip 0° 10.8mm",cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:11.40,cpp:48},
+  {sku:"4410",desc:"Univ Clip 90° 9mm",  cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:13.70,cpp:48},
   {sku:"4411",desc:"Univ Clip 90° 10.8mm",cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:13.70,cpp:48},
-  {sku:"4510",desc:"Flexi Clip 9mm",      cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:12.40,cpp:48},
-  {sku:"4511",desc:"Flexi Clip 10.8mm",   cat:"Basket Clips",   packSize:400,  cartonType:"I",    cartonWt:12.70,cpp:48},
+  {sku:"4510",desc:"Flexi Clip 9mm",      cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:12.40,cpp:48},
+  {sku:"4511",desc:"Flexi Clip 10.8mm",   cat:"Basket Clips",    packSize:400,  cartonType:"I",    cartonWt:12.70,cpp:48},
   {sku:"4514",desc:"Flexi Clip 20mm 600F",cat:"Basket Clips",   packSize:200,  cartonType:"I",    cartonWt:10.40,cpp:48},
   {sku:"4515",desc:"Flexi Clip 20mm 600R",cat:"Basket Clips",   packSize:200,  cartonType:"I",    cartonWt:10.30,cpp:48},
   {sku:"4516",desc:"Flexi Clip 20mm 800R",cat:"Basket Clips",   packSize:200,  cartonType:"I",    cartonWt:10.22,cpp:48},
@@ -161,13 +164,16 @@ function solve(cL,cW,cH,items){
   return{placed,unpacked};
 }
 
-function solvePallets(pL,pW,pH,maxWt,items){
+// palletThickness is subtracted from maxH before passing to solve,
+// so the solver only ever fills the available cargo space above the board.
+function solvePallets(pL,pW,maxH,maxWt,palletThickness,items){
+  const cargoH = maxH - palletThickness;
   const pallets=[];let remaining=[...items];
   while(remaining.length>0&&pallets.length<60){
     let wt=0;const batch=[],leftover=[];
     for(const item of remaining){if(wt+item.wt<=maxWt){batch.push(item);wt+=item.wt;}else leftover.push(item);}
     if(batch.length===0){batch.push(remaining[0]);leftover.push(...remaining.slice(1));}
-    const{placed,unpacked}=solve(pL,pW,pH,batch);
+    const{placed,unpacked}=solve(pL,pW,cargoH,batch);
     if(placed.length===0)break;
     pallets.push({placed,weight:placed.reduce((s,p)=>s+p.wt,0)});
     remaining=[...unpacked,...leftover];
@@ -201,15 +207,17 @@ function drawContainer(ctx,W,H,placed,cL,cW,cH,rY,rX,zoom,pX,pY){
   drawBoxes(ctx,p,placed);
 }
 
-function drawPallets(ctx,W,H,pallets,pL,pW,pH,rY,rX,zoom,pX,pY){
+// BASE is now palletThickness — board height and cargo offset are in sync with the solver.
+function drawPallets(ctx,W,H,pallets,pL,pW,cargoH,palletThickness,rY,rX,zoom,pX,pY){
   ctx.clearRect(0,0,W,H);if(!pallets.length)return;
-  const BASE=12,GAP=25,totalX=pallets.length*(pL+GAP)-GAP;
-  const p=projFn(totalX/2,(BASE+pH)/2,pW/2,rY,rX,zoom,W,H,pX,pY,Math.max(totalX,pW,BASE+pH));
+  const BASE=palletThickness;
+  const GAP=25,totalX=pallets.length*(pL+GAP)-GAP;
+  const p=projFn(totalX/2,(BASE+cargoH)/2,pW/2,rY,rX,zoom,W,H,pX,pY,Math.max(totalX,pW,BASE+cargoH));
   pallets.forEach(({placed},pi)=>{
     const ox=pi*(pL+GAP);
     const bv=[[ox,0,0],[ox+pL,0,0],[ox+pL,0,pW],[ox,0,pW],[ox,BASE,0],[ox+pL,BASE,0],[ox+pL,BASE,pW],[ox,BASE,pW]].map(([x,y,z])=>p(x,y,z));
     [[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach((face,fi)=>{const ps=face.map(i=>bv[i]);ctx.beginPath();ctx.moveTo(ps[0].sx,ps[0].sy);ps.slice(1).forEach(v=>ctx.lineTo(v.sx,v.sy));ctx.closePath();ctx.fillStyle=`rgba(160,110,50,${[0.75,0.5,0.5,0.35,0.35][fi]})`;ctx.fill();ctx.strokeStyle="rgba(100,60,20,0.6)";ctx.lineWidth=0.5;ctx.stroke();});
-    const wv=[[ox,BASE,0],[ox+pL,BASE,0],[ox+pL,BASE,pW],[ox,BASE,pW],[ox,BASE+pH,0],[ox+pL,BASE+pH,0],[ox+pL,BASE+pH,pW],[ox,BASE+pH,pW]].map(([x,y,z])=>p(x,y,z));
+    const wv=[[ox,BASE,0],[ox+pL,BASE,0],[ox+pL,BASE,pW],[ox,BASE,pW],[ox,BASE+cargoH,0],[ox+pL,BASE+cargoH,0],[ox+pL,BASE+cargoH,pW],[ox,BASE+cargoH,pW]].map(([x,y,z])=>p(x,y,z));
     [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(wv[a].sx,wv[a].sy);ctx.lineTo(wv[b].sx,wv[b].sy);ctx.strokeStyle="rgba(60,150,255,0.2)";ctx.lineWidth=0.7;ctx.stroke();});
     const top=wv[4];ctx.fillStyle="rgba(180,200,220,0.5)";ctx.font="bold 11px monospace";ctx.textAlign="center";ctx.fillText(`P${pi+1}`,top.sx,top.sy-6);
     drawBoxes(ctx,p,placed.map(b=>({...b,x:ox+b.x,y:BASE+b.y})));
@@ -224,7 +232,7 @@ export default function BinPack3D(){
   const[contType,  setContType]  = useState("c20ft");
   const[cont,      setCont]      = useState({L:590,W:235,H:236});
   const[palletType,setPalletType]= useState("au");
-  const[pallet,    setPallet]    = useState({L:116,W:116,maxH:180,maxWt:1000,palletWt:25});
+  const[pallet,    setPallet]    = useState({L:120,W:120,maxH:180,maxWt:1000,palletWt:20,palletThickness:15});
   const[gl,        setGl]        = useState(5);
   const[skuOrders, setSkuOrders] = useState({});
   const[boxes,     setBoxes]     = useState(makeBoxes());
@@ -237,7 +245,9 @@ export default function BinPack3D(){
   const cam=useRef({rY:.5,rX:.4,zoom:5,pX:0,pY:0});
   const drag=useRef(null),modeRef=useRef(mode);
   const pRef=useRef([]),palletsRef=useRef([]);
-  const cRef=useRef([590,235,236]),palletRef=useRef([116,116,180]);
+  const cRef=useRef([590,235,236]);
+  // [pL, pW, cargoH, palletThickness]
+  const palletRef=useRef([120,120,165,15]);
 
   useEffect(()=>{modeRef.current=mode;},[mode]);
 
@@ -267,19 +277,23 @@ export default function BinPack3D(){
     }
   },[inputMode,skuOrders,boxes,gl]);
 
-  const activeSkus  = useMemo(()=>SKUS.filter(s=>(skuOrders[s.sku]||0)>0),[skuOrders]);
-  const activeBoxes = useMemo(()=>boxes.filter(b=>b.qty>0),[boxes]);
-  const hasInput    = inputMode==="skus"?activeSkus.length>0:activeBoxes.length>0;
+  const activeSkus   = useMemo(()=>SKUS.filter(s=>(skuOrders[s.sku]||0)>0),[skuOrders]);
+  const activeBoxes  = useMemo(()=>boxes.filter(b=>b.qty>0),[boxes]);
+  const hasInput     = inputMode==="skus"?activeSkus.length>0:activeBoxes.length>0;
   const totalWtInput = useMemo(()=>cartonItems.reduce((s,i)=>s+i.wt,0),[cartonItems]);
-
-  const activeTypes=useMemo(()=>{const seen=new Set(),list=[];for(const i of cartonItems)if(!seen.has(i.cartonType)){seen.add(i.cartonType);list.push(i.cartonType);}return list;},[cartonItems]);
-  const filteredSkus=useMemo(()=>SKUS.filter(s=>{const inCat=catFilter==="All"||s.cat===catFilter;const q=search.toLowerCase();return inCat&&(!q||s.sku.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q));}),[catFilter,search]);
+  const activeTypes  = useMemo(()=>{const seen=new Set(),list=[];for(const i of cartonItems)if(!seen.has(i.cartonType)){seen.add(i.cartonType);list.push(i.cartonType);}return list;},[cartonItems]);
+  const filteredSkus = useMemo(()=>SKUS.filter(s=>{const inCat=catFilter==="All"||s.cat===catFilter;const q=search.toLowerCase();return inCat&&(!q||s.sku.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q));}),[catFilter,search]);
 
   const redraw=useCallback(()=>{
     const cv=cvRef.current;if(!cv)return;
     const{rY,rX,zoom,pX,pY}=cam.current;
-    if(modeRef.current==="container"){const[L,W,H]=cRef.current;drawContainer(cv.getContext("2d"),cv.width,cv.height,pRef.current,L,W,H,rY,rX,zoom,pX,pY);}
-    else{const[pL,pW,pH]=palletRef.current;drawPallets(cv.getContext("2d"),cv.width,cv.height,palletsRef.current,pL,pW,pH,rY,rX,zoom,pX,pY);}
+    if(modeRef.current==="container"){
+      const[L,W,H]=cRef.current;
+      drawContainer(cv.getContext("2d"),cv.width,cv.height,pRef.current,L,W,H,rY,rX,zoom,pX,pY);
+    } else {
+      const[pL,pW,cargoH,thickness]=palletRef.current;
+      drawPallets(cv.getContext("2d"),cv.width,cv.height,palletsRef.current,pL,pW,cargoH,thickness,rY,rX,zoom,pX,pY);
+    }
   },[]);
 
   useEffect(()=>{
@@ -297,7 +311,13 @@ export default function BinPack3D(){
 
   const handleContType=key=>{setContType(key);if(key!=="custom")setCont({L:CONTAINERS[key].L,W:CONTAINERS[key].W,H:CONTAINERS[key].H});};
   const handleContDim=(k,v)=>{setContType("custom");setCont(c=>({...c,[k]:+v}));};
-  const handlePalletType=key=>{setPalletType(key);if(key!=="custom")setPallet({L:PALLETS[key].L,W:PALLETS[key].W,maxH:PALLETS[key].maxH,maxWt:PALLETS[key].maxWt,palletWt:PALLETS[key].palletWt});};
+  const handlePalletType=key=>{
+    setPalletType(key);
+    if(key!=="custom"){
+      const pt=PALLETS[key];
+      setPallet({L:pt.L,W:pt.W,maxH:pt.maxH,maxWt:pt.maxWt,palletWt:pt.palletWt,palletThickness:pt.palletThickness});
+    }
+  };
   const handlePalletDim=(k,v)=>{setPalletType("custom");setPallet(p=>({...p,[k]:+v}));};
   const setOrder=(sku,val)=>{const n=val===""?0:Math.max(0,parseInt(val)||0);setSkuOrders(prev=>n===0?Object.fromEntries(Object.entries(prev).filter(([k])=>k!==sku)):{...prev,[sku]:n});};
   const upBox=(id,f,v)=>setBoxes(bs=>bs.map(b=>b.id!==id?b:{...b,[f]:f==="name"?v:(v===""||v===null?null:Math.max(0,+v))}));
@@ -312,15 +332,17 @@ export default function BinPack3D(){
         setResult({type:"container",placed:placed.length,total:cartonItems.length,unpacked:unpacked.length,pct:usedV/(cont.L*cont.W*cont.H)*100,totalWt:placed.reduce((s,p)=>s+p.wt,0)});
         pRef.current=placed;cRef.current=[cont.L,cont.W,cont.H];palletsRef.current=[];
       } else {
-        const{pallets,unplaced}=solvePallets(pallet.L,pallet.W,pallet.maxH,pallet.maxWt,cartonItems);
+        const thickness=pallet.palletThickness;
+        const cargoH=pallet.maxH-thickness;
+        const{pallets,unplaced}=solvePallets(pallet.L,pallet.W,pallet.maxH,pallet.maxWt,thickness,cartonItems);
         const itemWt=pallets.reduce((s,p)=>s+p.weight,0);
         setResult({type:"pallet",palletCount:pallets.length,totalCartons:cartonItems.length,
           totalItemWt:itemWt,
           totalWt:itemWt+(pallets.length*pallet.palletWt),
           totalVol:cartonItems.reduce((s,i)=>s+i.eL*i.eW*i.eH,0)/1e6,unplaced});
-        pRef.current       = [];     
+        pRef.current       = [];
         palletsRef.current = pallets;
-        palletRef.current  = [pallet.L, pallet.W, pallet.maxH];
+        palletRef.current  = [pallet.L, pallet.W, cargoH, thickness];
       }
       redraw();setBusy(false);
     },10);
@@ -328,22 +350,19 @@ export default function BinPack3D(){
 
   const lcol=gl<=5?"#22c55e":gl<=15?"#f59e0b":"#ef4444";
   const contVolM3=((cont.L*cont.W*cont.H)/1e6).toFixed(1);
+  const cargoH=pallet.maxH-pallet.palletThickness;
   const modeBtn=a=>({flex:1,padding:"7px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
-  const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400, background:a?"#3b82f6":"var(--color-background-secondary)", color:a?"#fff":"var(--color-text-secondary)", border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`, borderRadius:6,cursor:"pointer",transition:"all .15s"});
+  const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
 
   return(
     <div style={{display:"flex",height:"100vh",border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
-
-      {/* ── Sidebar ── */}
       <div style={{width:400,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
 
-        {/* Header */}
         <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
           <div style={{fontSize:20,fontWeight:600,color:"var(--color-text-primary)"}}>BinPack 3D</div>
           <div style={{fontSize:11,color:"var(--color-text-secondary)",marginTop:2}}>SEAPA container &amp; pallet loading optimizer</div>
         </div>
 
-        {/* Shipping mode */}
         <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>SHIPPING MODE</div>
           <div style={{display:"flex",gap:4}}>
@@ -352,7 +371,6 @@ export default function BinPack3D(){
           </div>
         </div>
 
-        {/* Container / Pallet config */}
         {mode==="container"?(
           <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>CONTAINER TYPE</div>
@@ -373,17 +391,20 @@ export default function BinPack3D(){
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:4,marginBottom:8}}>
               {Object.entries(PALLETS).map(([key,pt])=>{const a=palletType===key;return(<button key={key} onClick={()=>handlePalletType(key)} style={{padding:"5px 3px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3}}>{pt.label}</button>);})}
             </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:5}}>
-              {[["L","L (cm)"],["W","W (cm)"],["maxH","Max H (cm)"],["maxWt","Max Wt (kg)"]].map(([k,lbl])=>(
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr 1fr",gap:5,marginBottom:6}}>
+              {[["L","L (cm)"],["W","W (cm)"],["maxH","Total H (cm)"],["maxWt","Max Wt (kg)"],["palletThickness","Board (cm)"]].map(([k,lbl])=>(
                 <div key={k}><label style={{fontSize:9,color:"var(--color-text-secondary)",display:"block",marginBottom:2}}>{lbl}</label>
                   <input type="number" min="1" value={pallet[k]} onChange={e=>handlePalletDim(k,e.target.value)} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
                 </div>
               ))}
             </div>
+            <div style={{fontSize:10,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px"}}>
+              Cargo space: <span style={{fontWeight:600,color:cargoH>0?"#22c55e":"#ef4444"}}>{cargoH} cm</span>
+              <span style={{marginLeft:8,opacity:.6}}>(Total {pallet.maxH} − board {pallet.palletThickness})</span>
+            </div>
           </div>
         )}
 
-        {/* Input mode */}
         <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>INPUT MODE</div>
           <div style={{display:"flex",gap:4}}>
@@ -392,10 +413,7 @@ export default function BinPack3D(){
           </div>
         </div>
 
-        {/* ── Scrollable input area ── */}
         <div style={{flex:1,overflowY:"auto",padding:"8px 12px",display:"flex",flexDirection:"column",gap:6}}>
-
-          {/* SKU input */}
           {inputMode==="skus"&&(<>
             <input placeholder="Search SKU or description…" value={search} onChange={e=>setSearch(e.target.value)}
               style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"5px 8px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,background:"var(--color-background-primary)",color:"var(--color-text-primary)",outline:"none"}}/>
@@ -424,7 +442,6 @@ export default function BinPack3D(){
             {filteredSkus.length===0&&<div style={{fontSize:11,color:"var(--color-text-secondary)",textAlign:"center",padding:16}}>No SKUs match.</div>}
           </>)}
 
-          {/* Carton input */}
           {inputMode==="cartons"&&(<>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:2}}>
               <span style={{fontSize:14,color:"var(--color-text-secondary)",letterSpacing:.5}}>SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active</span>
@@ -449,10 +466,7 @@ export default function BinPack3D(){
           </>)}
         </div>
 
-        {/* ── Bottom panel: Leeway + Summary + Run + Stats ── */}
         <div style={{flexShrink:0,borderTop:"0.5px solid var(--color-border-tertiary)",maxHeight:"45vh",overflowY:"auto"}}>
-
-          {/* Leeway */}
           <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
               <span style={{fontSize:10,color:"var(--color-text-secondary)",letterSpacing:.5,flex:1}}>CARTON LEEWAY</span>
@@ -470,17 +484,13 @@ export default function BinPack3D(){
             </div>
           </div>
 
-          {/* Summary */}
           {hasInput&&(
             <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
               <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:4}}>
                 {[
-                  ["SKUs / Types", inputMode==="skus"?activeSkus.length:activeBoxes.length],
-                  ["Cartons",      cartonItems.length],
-                  ...(inputMode==="skus"?[
-                    ["kg",  totalWtInput.toFixed(1)],
-                    ["lbs", (totalWtInput*2.205).toFixed(1)],
-                  ]:[["—","—"],["—","—"]]),
+                  ["SKUs / Types",inputMode==="skus"?activeSkus.length:activeBoxes.length],
+                  ["Cartons",     cartonItems.length],
+                  ...(inputMode==="skus"?[["kg",totalWtInput.toFixed(1)],["lbs",(totalWtInput*2.205).toFixed(1)]]:[["—","—"],["—","—"]]),
                 ].map(([l,v])=>(
                   <div key={l} style={{background:"var(--color-background-secondary)",borderRadius:5,padding:"4px 6px",textAlign:"center"}}>
                     <div style={{fontSize:8,color:"var(--color-text-secondary)",marginBottom:1}}>{l}</div>
@@ -491,20 +501,18 @@ export default function BinPack3D(){
             </div>
           )}
 
-          {/* Run button */}
           <button onClick={runPack} disabled={busy||!hasInput}
             style={{display:"block",width:"calc(100% - 24px)",margin:"8px 12px 0",padding:"15px",background:!hasInput||busy?"var(--color-background-secondary)":"#3b82f6",color:"#fff",border:`0.5px solid ${!hasInput||busy?"var(--color-border-secondary)":"#3b82f6"}`,boxShadow:hasInput&&!busy?"0 0 12px rgba(59,130,246,0.35)":"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:!hasInput?"not-allowed":"pointer",opacity:(!hasInput||busy)?.45:1,transition:"all .2s"}}>
             {busy?"Computing…":!hasInput?`Enter ${inputMode==="skus"?"SKU quantities":"carton quantities"} first`:`▶  Calculate ${mode==="container"?"container":"pallet"} packing`}
           </button>
 
-          {/* Result stats */}
           <div style={{padding:"8px 12px 10px"}}>
             {mode==="container"?(
               <>
-                {[["Packed",      result?.type==="container"?`${result.placed} / ${result.total}`:"—",                                                                                "var(--color-text-primary)"],
-                  ["Not fitted",  result?.type==="container"?result.unpacked:"—",                                                                                                    "var(--color-text-danger,#e24b4a)"],
-                  ["Utilization", result?.type==="container"?`${result.pct.toFixed(1)}%`:"—",                                                                                        "var(--color-text-success,#15803d)"],
-                  ["Total weight",result?.type==="container"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
+                {[["Packed",      result?.type==="container"?`${result.placed} / ${result.total}`:"—","var(--color-text-primary)"],
+                  ["Not fitted",  result?.type==="container"?result.unpacked:"—","var(--color-text-danger,#e24b4a)"],
+                  ["Utilization", result?.type==="container"?`${result.pct.toFixed(1)}%`:"—","var(--color-text-success,#15803d)"],
+                  ["Total weight",result?.type==="container"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
                 ].map(([l,v,c])=>(
                   <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                     <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
@@ -515,12 +523,12 @@ export default function BinPack3D(){
                 </div>
               </>
             ):(
-              [["Pallets needed",   result?.type==="pallet"?result.palletCount:"—",                                                                                                  "#3b82f6"],
-               ["Total cartons",    result?.type==="pallet"?result.totalCartons:"—",                                                                                                 "var(--color-text-primary)"],
-               ["Item weight",      result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—",           "var(--color-text-secondary)"],
-               ["Gross w/pallets",  result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—",                  "var(--color-text-secondary)"],
-               ["Total volume",     result?.type==="pallet"?`${result.totalVol.toFixed(3)} m³`:"—",                                                                                 "var(--color-text-secondary)"],
-               ["Unplaced cartons", result?.type==="pallet"?result.unplaced:"—",                                                                                                     "var(--color-text-danger,#e24b4a)"],
+              [["Pallets needed",  result?.type==="pallet"?result.palletCount:"—","#3b82f6"],
+               ["Total cartons",   result?.type==="pallet"?result.totalCartons:"—","var(--color-text-primary)"],
+               ["Item weight",     result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
+               ["Gross w/pallets", result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
+               ["Total volume",    result?.type==="pallet"?`${result.totalVol.toFixed(3)} m³`:"—","var(--color-text-secondary)"],
+               ["Unplaced cartons",result?.type==="pallet"?result.unplaced:"—","var(--color-text-danger,#e24b4a)"],
               ].map(([l,v,c])=>(
                 <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                   <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
@@ -531,14 +539,15 @@ export default function BinPack3D(){
         </div>
       </div>
 
-      {/* ── 3D Viewport ── */}
       <div ref={vpRef} style={{flex:1,position:"relative",background:"#07090d",overflow:"hidden",cursor:"grab"}}
         onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
         onWheel={onWheel} onContextMenu={e=>e.preventDefault()}>
         <canvas ref={cvRef} style={{display:"block",width:"100%",height:"100%"}}/>
 
         <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:15,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
-          {mode==="container"?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`:`${PALLETS[palletType]?.label??"Custom"} · wt ${pallet.palletWt} kg · max ${pallet.maxH} cm · max ${pallet.maxWt} kg`}
+          {mode==="container"
+            ?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`
+            :`${PALLETS[palletType]?.label??"Custom"} · board ${pallet.palletThickness} cm · cargo ${cargoH} cm · max ${pallet.maxWt} kg`}
         </div>
 
         {!result&&(
