@@ -318,6 +318,9 @@ export default function BinPack3D(){
           totalItemWt:itemWt,
           totalWt:itemWt+(pallets.length*pallet.palletWt),
           totalVol:cartonItems.reduce((s,i)=>s+i.eL*i.eW*i.eH,0)/1e6,unplaced});
+        pRef.current       = [];     
+        palletsRef.current = pallets;
+        palletRef.current  = [pallet.L, pallet.W, pallet.maxH];
       }
       redraw();setBusy(false);
     },10);
