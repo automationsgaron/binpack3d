@@ -35,10 +35,10 @@ const CONTAINERS = {
   custom:{label:"Custom",       L:590, W:235,H:236},
 };
 const PALLETS = {
-  au:    {label:"AU 120×120",L:120,W:120,maxH:180,maxWt:1000,palletWt:20,palletThickness:15},
-  eur:   {label:"EUR 120×80", L:120,W:80, maxH:180,maxWt:800, palletWt:20,palletThickness:14},
-  us:    {label:"US 122×102",L:122,W:102,maxH:180,maxWt:1000,palletWt:27,palletThickness:14},
-  custom:{label:"Custom",    L:116,W:116,maxH:180,maxWt:1000,palletWt:25,palletThickness:15},
+  au:    {label:"AU 120×120",L:120,W:120,maxH:230,maxWt:1000,palletWt:20,palletThickness:15},
+  eur:   {label:"EUR 120×80", L:120,W:80, maxH:230,maxWt:800, palletWt:20,palletThickness:14},
+  us:    {label:"US 122×102",L:122,W:102,maxH:230,maxWt:1000,palletWt:27,palletThickness:14},
+  custom:{label:"Custom",    L:116,W:116,maxH:230,maxWt:1000,palletWt:25,palletThickness:15},
 };
 
 // Hardcoded physical pallet dimensions per carton type, derived from confirmed stacking data.
