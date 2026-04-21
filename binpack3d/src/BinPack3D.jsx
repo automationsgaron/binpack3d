@@ -35,9 +35,9 @@ const CONTAINERS = {
   custom:{label:"Custom",       L:590, W:235,H:236},
 };
 const PALLETS = {
-  au:    {label:"AU 120×120",L:120,W:120,maxH:230,maxWt:1000,palletWt:20,palletThickness:15},
-  eur:   {label:"EUR 120×80", L:120,W:80, maxH:230,maxWt:800, palletWt:20,palletThickness:14},
-  us:    {label:"US 122×102",L:122,W:102,maxH:230,maxWt:1000,palletWt:27,palletThickness:14},
+  au:    {label:"AU",L:120,W:120,maxH:230,maxWt:1000,palletWt:20,palletThickness:15},
+  eur:   {label:"EUR", L:120,W:80, maxH:230,maxWt:800, palletWt:20,palletThickness:14},
+  us:    {label:"US",L:122,W:102,maxH:230,maxWt:1000,palletWt:27,palletThickness:14},
   custom:{label:"Custom",    L:116,W:116,maxH:230,maxWt:1000,palletWt:25,palletThickness:15},
 };
 
@@ -593,8 +593,8 @@ export default function BinPack3D(){
                 <span style={{fontSize:9,color:"var(--color-text-secondary)"}}>{overhang===0?"none":overhang<=4?"minimal":overhang<=8?"moderate":"large"}</span>
               </div>
               <div style={{display:"flex",alignItems:"center",gap:8}}>
-                <input type="range" min="0" max="20" step="0.5" value={overhang} onChange={e=>setOverhang(+e.target.value)} style={{flex:1}}/>
-                <input type="number" min="0" max="20" step="0.5" value={overhang} onChange={e=>setOverhang(Math.min(20,Math.max(0,Math.round(+e.target.value*2)/2)))}
+                <input type="range" min="0" max="15" step="0.5" value={overhang} onChange={e=>setOverhang(+e.target.value)} style={{flex:1}}/>
+                <input type="number" min="0" max="15" step="0.5" value={overhang} onChange={e=>setOverhang(Math.min(20,Math.max(0,Math.round(+e.target.value*2)/2)))}
                   style={{fontFamily:"var(--font-mono)",fontSize:12,fontWeight:600,width:42,padding:"2px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:5,textAlign:"center",color:ohcol,background:"var(--color-background-primary)"}}/>
                 <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>cm</span>
               </div>
@@ -670,8 +670,8 @@ export default function BinPack3D(){
               <span style={{fontSize:10,color:"var(--color-text-secondary)"}}>{gl===0?"exact":gl<=5?"minimal":gl<=12?"standard":gl<=20?"generous":"large"}</span>
             </div>
             <div style={{display:"flex",alignItems:"center",gap:8}}>
-              <input type="range" min="0" max="30" step="0.5" value={gl} onChange={e=>setGl(+e.target.value)} style={{flex:1}}/>
-              <input type="number" min="0" max="30" step="0.5" value={gl} onChange={e=>setGl(Math.min(30,Math.max(0,+e.target.value)))}
+              <input type="range" min="0" max="10" step="0.1" value={gl} onChange={e=>setGl(+e.target.value)} style={{flex:1}}/>
+              <input type="number" min="0" max="10" step="0.1" value={gl} onChange={e=>setGl(Math.min(30,Math.max(0,+e.target.value)))}
                 style={{fontFamily:"var(--font-mono)",fontSize:13,fontWeight:600,width:42,padding:"2px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:5,textAlign:"center",color:lcol,background:"var(--color-background-primary)"}}/>
               <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>%</span>
             </div>
@@ -759,7 +759,7 @@ export default function BinPack3D(){
         <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:13,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
           {mode==="container"
             ?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`
-            :`${PALLETS[palletType]?.label??"Custom"} · ${pallet.L}×${pallet.W} cm · board ${pallet.palletThickness} cm · cargo ${cargoH} cm${overhang>0?` · +${overhang}cm overhang`:""}`}
+            :`${PALLETS[palletType]?.label??"Custom"} · ${pallet.L}×${pallet.W} cm · board height ${pallet.palletThickness} cm · cargo height ${cargoH} cm${overhang>0?` · +${overhang}cm overhang`:""}`}
         </div>
 
         {/* Empty state */}
