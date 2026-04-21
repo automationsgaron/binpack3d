@@ -14,7 +14,6 @@ const CARTON_TYPES = {
   J:{l:40.0,w:33.0,h:44.6}, K:{l:92.2,w:39.5,h:33.2},
   M:{l:68.0,w:33.6,h:29.4},
 };
-
 //  {code:"C",    desc:"34L Tubes",           l:86.6,w:46.6,h:81.6},
 //  {code:"D",    desc:"45L Tubes",           l:86.6,w:24.6,h:106.0},
 const CATALOGUE = [
@@ -44,8 +43,10 @@ const PALLETS = {
 
 // Hardcoded physical pallet dimensions per carton type, derived from confirmed stacking data.
 // palletL/W: footprint of the fully-packed pallet (cm). stackH: cargo height only (board excluded).
-// A 1.7% linear fudge is applied to each dimension → (1.017)³ ≈ 1.052, giving ~5% volume buffer.
-const PALLET_DIM_FUDGE = 1.017;
+// A linear fudge of PALLET_FUDGE_PCT % is applied to every dimension.
+// At 1.7%, the multiplier is 1.017 and (1.017)³ ≈ 1.052 → ~5% volume buffer for planning.
+const PALLET_FUDGE_PCT = 1.7;                         // % added to each linear dimension
+const PALLET_DIM_FUDGE = 1 + PALLET_FUDGE_PCT / 100; // → 1.017
 const f = (v) => parseFloat((v * PALLET_DIM_FUDGE).toFixed(1));
 const PALLET_CONFIG = {
   A:    {palletL:f(124.8), palletW:f(124.8), stackH:f(196.8)},
@@ -61,7 +62,7 @@ const PALLET_CONFIG = {
   M:    {palletL:f(136.0), palletW:f(120.0), stackH:f(147.0)},
 };
 
-//  {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
+// {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
 //  {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:18.40,cpp:10},
 //  {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:10.50,cpp:8},
 //  {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:12.30,cpp:8},
@@ -555,12 +556,13 @@ export default function BinPack3D(){
             </div>
             {palletPackMode==="cpp"&&(
               <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-primary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
-                Mode A: full CPP pallets per SKU (no 3D) + geometric solve on remainders (3D)
+                Full CPP pallets per SKU (no 3D) + geometric solve on remainders (3D).
+                CPP pallet dimensions include a <span style={{fontWeight:600,color:"var(--color-text-primary)"}}>1.7% linear fudge</span> on each dimension → ~5% volume buffer.
               </div>
             )}
             {palletPackMode==="free"&&(
               <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-primary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
-                Mode B: all cartons through geometric solver · adjust overhang to allow edge protrusion
+                All cartons through geometric solver · adjust overhang to allow edge protrusion
               </div>
             )}
 
