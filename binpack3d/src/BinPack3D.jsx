@@ -572,7 +572,7 @@ export default function BinPack3D(){
               {Object.entries(PALLETS).map(([key,pt])=>{const a=palletType===key;return(<button key={key} onClick={()=>handlePalletType(key)} style={{padding:"5px 3px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3}}>{pt.label}</button>);})}
             </div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr 1fr",gap:5,marginBottom:6}}>
-              {[["L","L (cm)"],["W","W (cm)"],["maxH","Total H"],["maxWt","Max Wt"],["palletThickness","Board"]].map(([k,lbl])=>(
+              {[["L","L (cm)"],["W","W (cm)"],["maxH","Total H"],["maxWt","Max Wt"],["palletThickness","Board H"]].map(([k,lbl])=>(
                 <div key={k}><label style={{fontSize:9,color:"var(--color-text-secondary)",display:"block",marginBottom:2}}>{lbl}</label>
                   <input type="number" min="1" value={pallet[k]} onChange={e=>handlePalletDim(k,e.target.value)} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"3px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:6,width:"100%",background:"var(--color-background-primary)",color:"var(--color-text-primary)"}}/>
                 </div>
