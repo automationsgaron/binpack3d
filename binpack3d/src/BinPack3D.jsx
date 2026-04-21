@@ -506,7 +506,7 @@ export default function BinPack3D(){
   const contVolM3=((cont.L*cont.W*cont.H)/1e6).toFixed(1);
   const cargoH=pallet.maxH-pallet.palletThickness;
   const modeBtn=a=>({flex:1,padding:"7px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
-  const packBtn=a=>({flex:1,padding:"5px 4px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#0f6e56":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#0f6e56":"var(--color-border-secondary)"}`,borderRadius:5,cursor:"pointer",transition:"all .15s"});
+  const packBtn=a=>({flex:1,padding:"5px 4px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:5,cursor:"pointer",transition:"all .15s"});
   const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
 
   const cppNote = palletPackMode==="cpp"&&inputMode==="cartons"
