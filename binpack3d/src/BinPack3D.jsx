@@ -14,12 +14,14 @@ const CARTON_TYPES = {
   J:{l:40.0,w:33.0,h:44.6}, K:{l:92.2,w:39.5,h:33.2},
   M:{l:68.0,w:33.6,h:29.4},
 };
+
+// Add these when required
+//  {code:"C",    desc:"34L Tubes",           l:86.6,w:46.6,h:81.6},
+//  {code:"D",    desc:"45L Tubes",           l:86.6,w:24.6,h:106.0},
 const CATALOGUE = [
   {code:"A",    desc:"15L Tubes",           l:65.6,w:29.6,h:65.6},
   {code:"GTX20",desc:"20L GTX Tube",        l:68.6,w:16.6,h:77.6},
   {code:"B",    desc:"25L Tubes",           l:87.0,w:47.0,h:62.0},
-  {code:"C",    desc:"34L Tubes",           l:86.6,w:46.6,h:81.6},
-  {code:"D",    desc:"45L Tubes",           l:86.6,w:24.6,h:106.0},
   {code:"E",    desc:"600 Series End Caps", l:63.6,w:54.6,h:54.6},
   {code:"F",    desc:"GTX End Cap",         l:63.6,w:55.6,h:38.6},
   {code:"G",    desc:"800 Series End Caps", l:72.6,w:42.6,h:54.6},
@@ -40,6 +42,12 @@ const PALLETS = {
   us:    {label:"US",L:122,W:102,maxH:180,maxWt:1000,palletWt:27,palletThickness:14},
   custom:{label:"Custom",    L:116,W:116,maxH:180,maxWt:1000,palletWt:25,palletThickness:15},
 };
+
+// Add these when required
+// {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
+// {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:18.40,cpp:10},
+// {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:10.50,cpp:8},
+// {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:12.30,cpp:8},
 const SKUS = [
   {sku:"1011",desc:"15L Tube 3mm",        cat:"Basket Tubes",    packSize:25,  cartonType:"A",    cartonWt:15.60,cpp:24},
   {sku:"1012",desc:"15L Tube 6mm",        cat:"Basket Tubes",    packSize:25,  cartonType:"A",    cartonWt:14.80,cpp:24},
@@ -49,10 +57,6 @@ const SKUS = [
   {sku:"1023",desc:"GTX Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"GTX20",cartonWt:15.70,cpp:24},
   {sku:"1033",desc:"25L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"B",    cartonWt:14.37,cpp:12},
   {sku:"1034",desc:"25L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"B",    cartonWt:15.20,cpp:12},
-  {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
-  {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:18.40,cpp:10},
-  {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:10.50,cpp:8},
-  {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:12.30,cpp:8},
   {sku:"2112",desc:"SL 600 EC 6mm",       cat:"End Caps",        packSize:100, cartonType:"E",    cartonWt:10.70,cpp:12},
   {sku:"2113",desc:"SL 600 EC 12mm",      cat:"End Caps",        packSize:100, cartonType:"E",    cartonWt:10.50,cpp:12},
   {sku:"2114",desc:"SL 600 EC 20mm",      cat:"End Caps",        packSize:100, cartonType:"E",    cartonWt:10.20,cpp:12},
