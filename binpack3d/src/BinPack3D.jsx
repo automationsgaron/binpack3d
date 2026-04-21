@@ -15,7 +15,6 @@ const CARTON_TYPES = {
   M:{l:68.0,w:33.6,h:29.4},
 };
 
-// Add these when required
 //  {code:"C",    desc:"34L Tubes",           l:86.6,w:46.6,h:81.6},
 //  {code:"D",    desc:"45L Tubes",           l:86.6,w:24.6,h:106.0},
 const CATALOGUE = [
@@ -37,17 +36,35 @@ const CONTAINERS = {
   custom:{label:"Custom",       L:590, W:235,H:236},
 };
 const PALLETS = {
-  au:    {label:"AU",L:120,W:120,maxH:230,maxWt:1000,palletWt:20,palletThickness:15},
-  eur:   {label:"EUR", L:120,W:80, maxH:180,maxWt:800, palletWt:20,palletThickness:14},
-  us:    {label:"US",L:122,W:102,maxH:180,maxWt:1000,palletWt:27,palletThickness:14},
+  au:    {label:"AU 120×120",L:120,W:120,maxH:180,maxWt:1000,palletWt:20,palletThickness:15},
+  eur:   {label:"EUR 120×80", L:120,W:80, maxH:180,maxWt:800, palletWt:20,palletThickness:14},
+  us:    {label:"US 122×102",L:122,W:102,maxH:180,maxWt:1000,palletWt:27,palletThickness:14},
   custom:{label:"Custom",    L:116,W:116,maxH:180,maxWt:1000,palletWt:25,palletThickness:15},
 };
 
-// Add these when required
-// {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
-// {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:18.40,cpp:10},
-// {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:10.50,cpp:8},
-// {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:12.30,cpp:8},
+// Hardcoded physical pallet dimensions per carton type, derived from confirmed stacking data.
+// palletL/W: footprint of the fully-packed pallet (cm). stackH: cargo height only (board excluded).
+// A 1.7% linear fudge is applied to each dimension → (1.017)³ ≈ 1.052, giving ~5% volume buffer.
+const PALLET_DIM_FUDGE = 1.017;
+const f = (v) => parseFloat((v * PALLET_DIM_FUDGE).toFixed(1));
+const PALLET_CONFIG = {
+  A:    {palletL:f(124.8), palletW:f(124.8), stackH:f(196.8)},
+  GTX20:{palletL:f(118.4), palletW:f(118.4), stackH:f(155.2)},
+  B:    {palletL:f(134.0), palletW:f(134.0), stackH:f(186.0)},
+  E:    {palletL:f(118.2), palletW:f(118.2), stackH:f(163.8)},
+  F:    {palletL:f(119.2), palletW:f(119.2), stackH:f(193.0)},
+  G:    {palletL:f(115.2), palletW:f(115.2), stackH:f(163.8)},
+  H:    {palletL:f(119.2), palletW:f(119.2), stackH:f(181.8)},
+  I:    {palletL:f(132.0), palletW:f(132.0), stackH:f(168.0)},
+  J:    {palletL:f(132.0), palletW:f(132.0), stackH:f(178.4)},
+  K:    {palletL:f(131.7), palletW:f(131.7), stackH:f(166.0)},
+  M:    {palletL:f(136.0), palletW:f(120.0), stackH:f(147.0)},
+};
+
+//  {sku:"1043",desc:"34L Tube 12mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:17.70,cpp:10},
+//  {sku:"1044",desc:"34L Tube 20mm",       cat:"Basket Tubes",    packSize:20,  cartonType:"C",    cartonWt:18.40,cpp:10},
+//  {sku:"1053",desc:"45L Tube 12mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:10.50,cpp:8},
+//  {sku:"1054",desc:"45L Tube 20mm",       cat:"Basket Tubes",    packSize:10,  cartonType:"D",    cartonWt:12.30,cpp:8},
 const SKUS = [
   {sku:"1011",desc:"15L Tube 3mm",        cat:"Basket Tubes",    packSize:25,  cartonType:"A",    cartonWt:15.60,cpp:24},
   {sku:"1012",desc:"15L Tube 6mm",        cat:"Basket Tubes",    packSize:25,  cartonType:"A",    cartonWt:14.80,cpp:24},
@@ -127,7 +144,7 @@ const SKUS = [
   {sku:"6200",desc:"Clip Retainer",       cat:"Accessories",     packSize:4000,cartonType:"I",    cartonWt:14.60,cpp:48},
   {sku:"6250",desc:"Premium EC Clip",     cat:"Accessories",     packSize:1000,cartonType:"I",    cartonWt:11.50,cpp:48},
   {sku:"6500",desc:"Trestle Clamp",       cat:"Accessories",     packSize:300, cartonType:"I",    cartonWt:8.70, cpp:48},
-  {sku:"6600",desc:"Locking Bar",         cat:"Accessories",     packSize:100, cartonType:"M",    cartonWt:14.60,cpp:24},
+  {sku:"6600",desc:"Locking Bar",         cat:"Accessories",     packSize:100, cartonType:"M",    cartonWt:14.60,cpp:30},
   {sku:"6601",desc:"GTX Clip Lock",       cat:"Accessories",     packSize:200, cartonType:"J",    cartonWt:9.80, cpp:48},
   {sku:"6602",desc:"GTX ID Plate",        cat:"Accessories",     packSize:2000,cartonType:"J",    cartonWt:8.10, cpp:48},
   {sku:"6603",desc:"GTX T-Piece Lock",    cat:"Accessories",     packSize:400, cartonType:"J",    cartonWt:15.20,cpp:48},
@@ -150,10 +167,31 @@ function solve(cL,cW,cH,items){
   const orients=(l,w,h)=>{const s=new Set(),o=[];for(const r of[[l,w,h],[l,h,w],[w,l,h],[w,h,l],[h,l,w],[h,w,l]]){const k=r.join();if(!s.has(k)){s.add(k);o.push(r);}}return o;};
   const groundY=(x,z,lx,lz)=>{if(x<0||z<0||x+lx>cL+.01||z+lz>cW+.01)return null;let y=0;for(const p of placed)if(p.x<x+lx-.01&&p.x+p.lx>x+.01&&p.z<z+lz-.01&&p.z+p.lz>z+.01)y=Math.max(y,p.y+p.ly);return y;};
   const addPt=(x,z)=>{if(x<cL&&z<cW&&x>=0&&z>=0&&!pts.find(p=>Math.abs(p.x-x)<.01&&Math.abs(p.z-z)<.01))pts.push({x,z});};
+  // Weight stability: reject positions where a lighter already-placed item is directly below
+  const weightStable=(x,z,lx,lz,y,wt)=>{
+    if(!wt)return true;
+    for(const p of placed){
+      if((p.wt||0)>=wt)continue;
+      if(p.x<x+lx-.01&&p.x+p.lx>x+.01&&p.z<z+lz-.01&&p.z+p.lz>z+.01&&p.y<y)return false;
+    }
+    return true;
+  };
   const unpacked=[];
-  for(const item of [...items].sort((a,b)=>b.eL*b.eW*b.eH-a.eL*a.eW*a.eH)){
+  // Heaviest first, largest volume as tiebreaker → heavy items claim lowest Y positions
+  for(const item of [...items].sort((a,b)=>(b.wt||0)-(a.wt||0)||b.eL*b.eW*b.eH-a.eL*a.eW*a.eH)){
     let best=null,bs=Infinity;
-    for(const pt of pts)for(const [lx,ly,lz] of orients(item.eL,item.eW,item.eH)){const y=groundY(pt.x,pt.z,lx,lz);if(y===null||y+ly>cH+.01)continue;const sc=y*1e8+pt.x*1e4+pt.z;if(sc<bs){bs=sc;best={x:pt.x,y,z:pt.z,lx,ly,lz};}}
+    // Pass 1: weight-stable positions only
+    for(const pt of pts)for(const [lx,ly,lz] of orients(item.eL,item.eW,item.eH)){
+      const y=groundY(pt.x,pt.z,lx,lz);
+      if(y===null||y+ly>cH+.01||!weightStable(pt.x,pt.z,lx,lz,y,item.wt))continue;
+      const sc=y*1e8+pt.x*1e4+pt.z;if(sc<bs){bs=sc;best={x:pt.x,y,z:pt.z,lx,ly,lz};}
+    }
+    // Pass 2: fallback — allow weight violations rather than leave items unplaced
+    if(!best)for(const pt of pts)for(const [lx,ly,lz] of orients(item.eL,item.eW,item.eH)){
+      const y=groundY(pt.x,pt.z,lx,lz);
+      if(y===null||y+ly>cH+.01)continue;
+      const sc=y*1e8+pt.x*1e4+pt.z;if(sc<bs){bs=sc;best={x:pt.x,y,z:pt.z,lx,ly,lz};}
+    }
     if(best){placed.push({...item,...best});addPt(best.x+best.lx,best.z);addPt(best.x,best.z+best.lz);addPt(best.x+best.lx,best.z+best.lz);}
     else unpacked.push(item);
   }
@@ -181,7 +219,6 @@ const mix=(h,d)=>{const r=Math.min(255,Math.max(0,parseInt(h.slice(1,3),16)+d)),
 function projFn(cx,cy,cz,rY,rX,zoom,W,H,pX,pY,sz){
   return(x,y,z)=>{const dx=x-cx,dy=y-cy,dz=z-cz;const rx=dx*Math.cos(rY)+dz*Math.sin(rY),rz=-dx*Math.sin(rY)+dz*Math.cos(rY);const ry2=dy*Math.cos(rX)-rz*Math.sin(rX),rz2=dy*Math.sin(rX)+rz*Math.cos(rX);const sc=400*zoom/(rz2+sz*2.5);return{sx:W/2+rx*sc+pX,sy:H/2-ry2*sc+pY,depth:rz2};};
 }
-
 function drawBoxes(ctx,p,placed){
   [...placed].map(b=>({...b,d:p(b.x+b.lx/2,b.y+b.ly/2,b.z+b.lz/2).depth})).sort((a,b)=>a.d-b.d).forEach(b=>{
     const{x,y,z,lx,ly,lz,col}=b;
@@ -191,7 +228,6 @@ function drawBoxes(ctx,p,placed){
       .forEach(f=>{const ps=f.i.map(i=>c[i]);ctx.beginPath();ctx.moveTo(ps[0].sx,ps[0].sy);ps.slice(1).forEach(v=>ctx.lineTo(v.sx,v.sy));ctx.closePath();ctx.fillStyle=rgb(mix(col,f.d),0.88);ctx.fill();ctx.strokeStyle="rgba(0,0,0,0.15)";ctx.lineWidth=0.5;ctx.stroke();});
   });
 }
-
 function drawContainer(ctx,W,H,placed,cL,cW,cH,rY,rX,zoom,pX,pY){
   ctx.clearRect(0,0,W,H);
   const p=projFn(cL/2,cH/2,cW/2,rY,rX,zoom,W,H,pX,pY,Math.max(cL,cW,cH));
@@ -201,83 +237,99 @@ function drawContainer(ctx,W,H,placed,cL,cW,cH,rY,rX,zoom,pX,pY){
   drawBoxes(ctx,p,placed);
 }
 
-// Draws pallets and per-pallet labels (number, weight, cartons, stack height) above each pallet.
-function drawPallets(ctx,W,H,pallets,pL,pW,cargoH,palletThickness,rY,rX,zoom,pX,pY){
+// pL/pW = actual pallet dims; oh = overhang per side (cm)
+// Solver was run on (pL+2*oh) × (pW+2*oh), so boxes may be placed from 0..pL+2*oh
+// We draw the actual pallet board centred within the effective zone.
+function drawPallets(ctx,W,H,pallets,pL,pW,cargoH,BASE,oh,rY,rX,zoom,pX,pY){
   ctx.clearRect(0,0,W,H);if(!pallets.length)return;
-  const BASE=palletThickness;
-  const GAP=25,totalX=pallets.length*(pL+GAP)-GAP;
-  const p=projFn(totalX/2,(BASE+cargoH)/2,pW/2,rY,rX,zoom,W,H,pX,pY,Math.max(totalX,pW,BASE+cargoH));
+  const effL=pL+2*oh, effW=pW+2*oh;
+  const GAP=25,totalX=pallets.length*(effL+GAP)-GAP;
+  const p=projFn(totalX/2,(BASE+cargoH)/2,effW/2,rY,rX,zoom,W,H,pX,pY,Math.max(totalX,effW,BASE+cargoH));
 
   pallets.forEach(({placed},pi)=>{
-    const ox=pi*(pL+GAP);
+    const ox=pi*(effL+GAP);
 
-    // Pallet board
-    const bv=[[ox,0,0],[ox+pL,0,0],[ox+pL,0,pW],[ox,0,pW],[ox,BASE,0],[ox+pL,BASE,0],[ox+pL,BASE,pW],[ox,BASE,pW]].map(([x,y,z])=>p(x,y,z));
-    [[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach((face,fi)=>{const ps=face.map(i=>bv[i]);ctx.beginPath();ctx.moveTo(ps[0].sx,ps[0].sy);ps.slice(1).forEach(v=>ctx.lineTo(v.sx,v.sy));ctx.closePath();ctx.fillStyle=`rgba(160,110,50,${[0.75,0.5,0.5,0.35,0.35][fi]})`;ctx.fill();ctx.strokeStyle="rgba(100,60,20,0.6)";ctx.lineWidth=0.5;ctx.stroke();});
+    // Overhang zone dashed amber outline
+    if(oh>0){
+      const ov=[[ox,0,0],[ox+effL,0,0],[ox+effL,0,effW],[ox,0,effW],
+                [ox,BASE+cargoH,0],[ox+effL,BASE+cargoH,0],[ox+effL,BASE+cargoH,effW],[ox,BASE+cargoH,effW]].map(([x,y,z])=>p(x,y,z));
+      ctx.strokeStyle='rgba(251,191,36,0.35)';ctx.lineWidth=0.8;ctx.setLineDash([5,3]);
+      [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{
+        ctx.beginPath();ctx.moveTo(ov[a].sx,ov[a].sy);ctx.lineTo(ov[b].sx,ov[b].sy);ctx.stroke();
+      });
+      ctx.setLineDash([]);
+    }
 
-    // Cargo zone wireframe
-    const wv=[[ox,BASE,0],[ox+pL,BASE,0],[ox+pL,BASE,pW],[ox,BASE,pW],[ox,BASE+cargoH,0],[ox+pL,BASE+cargoH,0],[ox+pL,BASE+cargoH,pW],[ox,BASE+cargoH,pW]].map(([x,y,z])=>p(x,y,z));
-    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(wv[a].sx,wv[a].sy);ctx.lineTo(wv[b].sx,wv[b].sy);ctx.strokeStyle="rgba(60,150,255,0.2)";ctx.lineWidth=0.7;ctx.stroke();});
+    // Pallet board (actual dims, centred in effective zone)
+    const bv=[[ox+oh,0,oh],[ox+oh+pL,0,oh],[ox+oh+pL,0,oh+pW],[ox+oh,0,oh+pW],
+              [ox+oh,BASE,oh],[ox+oh+pL,BASE,oh],[ox+oh+pL,BASE,oh+pW],[ox+oh,BASE,oh+pW]].map(([x,y,z])=>p(x,y,z));
+    [[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach((face,fi)=>{
+      const ps=face.map(i=>bv[i]);ctx.beginPath();ctx.moveTo(ps[0].sx,ps[0].sy);
+      ps.slice(1).forEach(v=>ctx.lineTo(v.sx,v.sy));ctx.closePath();
+      ctx.fillStyle=`rgba(160,110,50,${[0.75,0.5,0.5,0.35,0.35][fi]})`;ctx.fill();
+      ctx.strokeStyle="rgba(100,60,20,0.6)";ctx.lineWidth=0.5;ctx.stroke();
+    });
 
-    // Cargo boxes
+    // Cargo wireframe (actual pallet dims)
+    const wv=[[ox+oh,BASE,oh],[ox+oh+pL,BASE,oh],[ox+oh+pL,BASE,oh+pW],[ox+oh,BASE,oh+pW],
+              [ox+oh,BASE+cargoH,oh],[ox+oh+pL,BASE+cargoH,oh],[ox+oh+pL,BASE+cargoH,oh+pW],[ox+oh,BASE+cargoH,oh+pW]].map(([x,y,z])=>p(x,y,z));
+    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{
+      ctx.beginPath();ctx.moveTo(wv[a].sx,wv[a].sy);ctx.lineTo(wv[b].sx,wv[b].sy);
+      ctx.strokeStyle="rgba(60,150,255,0.2)";ctx.lineWidth=0.7;ctx.stroke();
+    });
+
+    // Boxes (solver placed them in 0..effL × 0..cargoH × 0..effW)
     drawBoxes(ctx,p,placed.map(b=>({...b,x:ox+b.x,y:BASE+b.y})));
 
-    // ── Per-pallet labels above each pallet ──────────────────────────────
-    const itemWt   = placed.reduce((s,b)=>s+b.wt,0);
-    const ctns     = placed.length;
-    const usedH    = ctns>0 ? Math.max(...placed.map(b=>b.y+b.ly)) : 0;
-    const fillPct  = cargoH>0 ? Math.round((usedH/cargoH)*100) : 0;
-
-    // Project the top-center of the cargo zone for label anchor
-    const topPt = p(ox+pL/2, BASE+cargoH, pW/2);
-    const sx=topPt.sx, sy=topPt.sy;
-
-    ctx.textAlign="center";
-    ctx.textBaseline="bottom";
-
-    // Pallet number badge
+    // Per-pallet labels
+    const itemWt=placed.reduce((s,b)=>s+b.wt,0);
+    const ctns=placed.length;
+    const usedH=ctns>0?Math.max(...placed.map(b=>b.y+b.ly)):0;
+    const fillPct=cargoH>0?Math.round((usedH/cargoH)*100):0;
+    const topPt=p(ox+effL/2,BASE+cargoH,effW/2);
+    const sx=topPt.sx,sy=topPt.sy;
+    ctx.textAlign="center";ctx.textBaseline="bottom";
     ctx.font="bold 13px monospace";
-    const label=`P${pi+1}`;
-    const lw=ctx.measureText(label).width+10;
+    const lbl=`P${pi+1}`;
+    const lw=ctx.measureText(lbl).width+10;
     ctx.fillStyle="rgba(30,80,160,0.75)";
-    ctx.beginPath();ctx.roundRect(sx-lw/2,sy-56,lw,18,3);ctx.fill();
-    ctx.fillStyle="rgba(180,210,255,0.95)";
-    ctx.fillText(label,sx,sy-40);
-
-    // Stats lines
+    ctx.beginPath();ctx.roundRect(sx-lw/2,sy-58,lw,18,3);ctx.fill();
+    ctx.fillStyle="rgba(180,210,255,0.95)";ctx.fillText(lbl,sx,sy-42);
     ctx.font="10px monospace";
     ctx.fillStyle="rgba(160,200,230,0.80)";
-    ctx.fillText(`${ctns} ctn${ctns!==1?"s":""}  ·  ${itemWt.toFixed(1)} kg`,sx,sy-26);
+    ctx.fillText(`${ctns} ctn${ctns!==1?"s":""}  ·  ${itemWt.toFixed(1)} kg`,sx,sy-28);
     ctx.fillStyle="rgba(120,170,200,0.65)";
-    const totalUsed = usedH + palletThickness;
-    const totalMax  = cargoH + palletThickness;
-    ctx.fillText(`${totalUsed.toFixed(0)}/${totalMax} cm  (${fillPct}%)`, sx, sy-13);
+    const totalUsed=usedH+BASE, totalMax=cargoH+BASE;
+    ctx.fillText(`${totalUsed.toFixed(0)}/${totalMax} cm  (${fillPct}%)`,sx,sy-15);
+    if(oh>0){ctx.fillStyle="rgba(251,191,36,0.6)";ctx.fillText(`+${oh}cm overhang`,sx,sy-2);}
   });
 }
 
 const pad=(v,pct)=>parseFloat((v*(1+pct/100)).toFixed(1));
 
 export default function BinPack3D(){
-  const[mode,       setMode]      = useState("container");
-  const[inputMode,  setInputMode] = useState("skus");
-  const[contType,   setContType]  = useState("c20ft");
-  const[cont,       setCont]      = useState({L:590,W:235,H:236});
-  const[palletType, setPalletType]= useState("au");
-  const[pallet,     setPallet]    = useState({L:120,W:120,maxH:180,maxWt:1000,palletWt:20,palletThickness:15});
-  const[gl,         setGl]        = useState(5);
-  const[skuOrders,  setSkuOrders] = useState({});
-  const[boxes,      setBoxes]     = useState(makeBoxes());
-  const[result,     setResult]    = useState(null);
-  const[busy,       setBusy]      = useState(false);
-  const[catFilter,  setCatFilter] = useState("All");
-  const[search,     setSearch]    = useState("");
+  const[mode,          setMode]         = useState("container");
+  const[palletPackMode,setPalletPackMode]= useState("free");   // "cpp" | "free"
+  const[inputMode,     setInputMode]    = useState("skus");
+  const[contType,      setContType]     = useState("c20ft");
+  const[cont,          setCont]         = useState({L:590,W:235,H:236});
+  const[palletType,    setPalletType]   = useState("au");
+  const[pallet,        setPallet]       = useState({L:120,W:120,maxH:180,maxWt:1000,palletWt:20,palletThickness:15});
+  const[gl,            setGl]           = useState(5);
+  const[overhang,      setOverhang]     = useState(0);
+  const[skuOrders,     setSkuOrders]    = useState({});
+  const[boxes,         setBoxes]        = useState(makeBoxes());
+  const[result,        setResult]       = useState(null);
+  const[busy,          setBusy]         = useState(false);
+  const[catFilter,     setCatFilter]    = useState("All");
+  const[search,        setSearch]       = useState("");
 
   const cvRef=useRef(),vpRef=useRef();
   const cam=useRef({rY:.5,rX:.4,zoom:5,pX:0,pY:0});
   const drag=useRef(null),modeRef=useRef(mode);
   const pRef=useRef([]),palletsRef=useRef([]);
   const cRef=useRef([590,235,236]);
-  const palletRef=useRef([120,120,165,15]); // [pL, pW, cargoH, thickness]
+  const palletRef=useRef([120,120,165,15,0]); // [pL,pW,cargoH,thickness,overhang]
 
   useEffect(()=>{modeRef.current=mode;},[mode]);
 
@@ -321,8 +373,8 @@ export default function BinPack3D(){
       const[L,W,H]=cRef.current;
       drawContainer(cv.getContext("2d"),cv.width,cv.height,pRef.current,L,W,H,rY,rX,zoom,pX,pY);
     } else {
-      const[pL,pW,cargoH,thickness]=palletRef.current;
-      drawPallets(cv.getContext("2d"),cv.width,cv.height,palletsRef.current,pL,pW,cargoH,thickness,rY,rX,zoom,pX,pY);
+      const[pL,pW,cargoH,thickness,oh]=palletRef.current;
+      drawPallets(cv.getContext("2d"),cv.width,cv.height,palletsRef.current,pL,pW,cargoH,thickness,oh,rY,rX,zoom,pX,pY);
     }
   },[]);
 
@@ -340,10 +392,7 @@ export default function BinPack3D(){
 
   const handleContType=key=>{setContType(key);if(key!=="custom")setCont({L:CONTAINERS[key].L,W:CONTAINERS[key].W,H:CONTAINERS[key].H});};
   const handleContDim=(k,v)=>{setContType("custom");setCont(c=>({...c,[k]:+v}));};
-  const handlePalletType=key=>{
-    setPalletType(key);
-    if(key!=="custom"){const pt=PALLETS[key];setPallet({L:pt.L,W:pt.W,maxH:pt.maxH,maxWt:pt.maxWt,palletWt:pt.palletWt,palletThickness:pt.palletThickness});}
-  };
+  const handlePalletType=key=>{setPalletType(key);if(key!=="custom"){const pt=PALLETS[key];setPallet({L:pt.L,W:pt.W,maxH:pt.maxH,maxWt:pt.maxWt,palletWt:pt.palletWt,palletThickness:pt.palletThickness});}};
   const handlePalletDim=(k,v)=>{setPalletType("custom");setPallet(p=>({...p,[k]:+v}));};
   const setOrder=(sku,val)=>{const n=val===""?0:Math.max(0,parseInt(val)||0);setSkuOrders(prev=>n===0?Object.fromEntries(Object.entries(prev).filter(([k])=>k!==sku)):{...prev,[sku]:n});};
   const upBox=(id,f,v)=>setBoxes(bs=>bs.map(b=>b.id!==id?b:{...b,[f]:f==="name"?v:(v===""||v===null?null:Math.max(0,+v))}));
@@ -352,48 +401,119 @@ export default function BinPack3D(){
   const runPack=()=>{
     if(!cartonItems.length)return;setBusy(true);
     setTimeout(()=>{
+      const thickness=pallet.palletThickness;
+      const cargoH=pallet.maxH-thickness;
+      const effL=pallet.L+2*overhang;
+      const effW=pallet.W+2*overhang;
+
       if(mode==="container"){
         const{placed,unpacked}=solve(cont.L,cont.W,cont.H,cartonItems);
         const usedV=placed.reduce((s,p)=>s+p.lx*p.ly*p.lz,0);
         setResult({type:"container",placed:placed.length,total:cartonItems.length,unpacked:unpacked.length,pct:usedV/(cont.L*cont.W*cont.H)*100,totalWt:placed.reduce((s,p)=>s+p.wt,0)});
         pRef.current=placed;cRef.current=[cont.L,cont.W,cont.H];palletsRef.current=[];
-      } else {
-        const thickness=pallet.palletThickness;
-        const cargoH=pallet.maxH-thickness;
-        const{pallets,unplaced}=solvePallets(pallet.L,pallet.W,pallet.maxH,pallet.maxWt,thickness,cartonItems);
-        const itemWt=pallets.reduce((s,p)=>s+p.weight,0);
-        // Build per-pallet stats stored in result for the overlay table
-        const palletStats=pallets.map((pal,i)=>({
-          n: i+1,
-          ctns: pal.placed.length,
-          wt:   pal.weight,
-          usedH: pal.placed.length>0 ? Math.max(...pal.placed.map(b=>b.y+b.ly)) : 0,
+
+      } else if(palletPackMode==="cpp" && inputMode==="skus"){
+        // ── Mode A: CPP-based ─────────────────────────────────────────────
+        const fullPallets=[];
+        const remainderItems=[];
+
+        for(const[sku,units] of Object.entries(skuOrders)){
+          if(!units||units<=0)continue;
+          const s=SKUS.find(x=>x.sku===sku);if(!s)continue;
+          const dims=CARTON_TYPES[s.cartonType];if(!dims)continue;
+          const totalCartons=Math.ceil(units/s.packSize);
+          const cppVal=s.cpp;
+          const fullCount=Math.floor(totalCartons/cppVal);
+          const rem=totalCartons%cppVal;
+          if(fullCount>0){
+            const cfg=PALLET_CONFIG[s.cartonType];
+            fullPallets.push({
+              sku:s.sku, desc:s.desc, cartonType:s.cartonType,
+              col:TYPE_COLS[s.cartonType]||"#888",
+              palletCount:fullCount, ctnsPerPallet:cppVal,
+              totalCtns:fullCount*cppVal, cartonWt:s.cartonWt,
+              totalItemWt:fullCount*cppVal*s.cartonWt,
+              grossWt:fullCount*cppVal*s.cartonWt+fullCount*pallet.palletWt,
+              palletL:cfg?cfg.palletL:pallet.L,
+              palletW:cfg?cfg.palletW:pallet.W,
+              stackH:cfg?cfg.stackH:pallet.maxH,
+            });
+          }
+          if(rem>0){
+            const eL=pad(dims.l,gl),eW=pad(dims.w,gl),eH=pad(dims.h,gl);
+            for(let i=0;i<Math.min(rem,300);i++)
+              remainderItems.push({id:sku,sku:s.sku,name:s.desc,cartonType:s.cartonType,col:TYPE_COLS[s.cartonType]||"#888",eL,eW,eH,wt:s.cartonWt});
+          }
+        }
+
+        const{pallets:remPallets,unplaced}=solvePallets(effL,effW,pallet.maxH,pallet.maxWt,thickness,remainderItems);
+        const fullPalletCount=fullPallets.reduce((s,p)=>s+p.palletCount,0);
+        const fullItemWt=fullPallets.reduce((s,p)=>s+p.totalItemWt,0);
+        const fullGrossWt=fullPallets.reduce((s,p)=>s+p.grossWt,0);
+        const remItemWt=remPallets.reduce((s,p)=>s+p.weight,0);
+        const remGrossWt=remItemWt+remPallets.length*pallet.palletWt;
+
+        const palletStats=remPallets.map((pal,i)=>({
+          n:i+1, ctns:pal.placed.length, wt:pal.weight,
+          usedH:pal.placed.length>0?Math.max(...pal.placed.map(b=>b.y+b.ly)):0,
           cargoH,
         }));
-        setResult({type:"pallet",palletCount:pallets.length,totalCartons:cartonItems.length,
-          totalItemWt:itemWt,
-          totalWt:itemWt+(pallets.length*pallet.palletWt),
+
+        setResult({
+          type:"pallet-cpp", fullPallets, fullPalletCount,
+          remPalletCount:remPallets.length,
+          totalPallets:fullPalletCount+remPallets.length,
+          totalCartons:cartonItems.length,
+          fullItemWt, fullGrossWt, remItemWt, remGrossWt,
+          totalItemWt:fullItemWt+remItemWt,
+          totalGrossWt:fullGrossWt+remGrossWt,
+          palletStats, palletWt:pallet.palletWt,
+          pDims:{L:pallet.L,W:pallet.W,maxH:pallet.maxH,cargoH,thickness},
+          unplaced, overhang,
+        });
+        pRef.current=[];
+        palletsRef.current=remPallets;
+        palletRef.current=[pallet.L,pallet.W,cargoH,thickness,overhang];
+
+      } else {
+        // ── Mode B: Free pack ─────────────────────────────────────────────
+        const{pallets,unplaced}=solvePallets(effL,effW,pallet.maxH,pallet.maxWt,thickness,cartonItems);
+        const itemWt=pallets.reduce((s,p)=>s+p.weight,0);
+        const palletStats=pallets.map((pal,i)=>({
+          n:i+1, ctns:pal.placed.length, wt:pal.weight,
+          usedH:pal.placed.length>0?Math.max(...pal.placed.map(b=>b.y+b.ly)):0,
+          cargoH,
+        }));
+        setResult({
+          type:"pallet", palletCount:pallets.length, totalCartons:cartonItems.length,
+          totalItemWt:itemWt, totalWt:itemWt+pallets.length*pallet.palletWt,
           palletWt:pallet.palletWt,
           pDims:{L:pallet.L,W:pallet.W,maxH:pallet.maxH,cargoH,thickness},
           totalVol:cartonItems.reduce((s,i)=>s+i.eL*i.eW*i.eH,0)/1e6,
-          unplaced,palletStats});
+          unplaced, palletStats, overhang,
+        });
         pRef.current=[];
         palletsRef.current=pallets;
-        palletRef.current=[pallet.L,pallet.W,cargoH,thickness];
+        palletRef.current=[pallet.L,pallet.W,cargoH,thickness,overhang];
       }
       redraw();setBusy(false);
     },10);
   };
 
   const lcol=gl<=5?"#22c55e":gl<=15?"#f59e0b":"#ef4444";
+  const ohcol=overhang===0?"#22c55e":overhang<=8?"#f59e0b":"#ef4444";
   const contVolM3=((cont.L*cont.W*cont.H)/1e6).toFixed(1);
   const cargoH=pallet.maxH-pallet.palletThickness;
   const modeBtn=a=>({flex:1,padding:"7px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
+  const packBtn=a=>({flex:1,padding:"5px 4px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#0f6e56":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#0f6e56":"var(--color-border-secondary)"}`,borderRadius:5,cursor:"pointer",transition:"all .15s"});
   const inputBtn=a=>({flex:1,padding:"5px 4px",fontSize:11,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",transition:"all .15s"});
+
+  const cppNote = palletPackMode==="cpp"&&inputMode==="cartons"
+    ? "CPP mode requires SKU input — running free pack instead."
+    : null;
 
   return(
     <div style={{display:"flex",height:"100vh",border:"0.5px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",fontFamily:"var(--font-mono)",fontSize:12}}>
-
       {/* ── Sidebar ── */}
       <div style={{width:400,flexShrink:0,background:"var(--color-background-secondary)",borderRight:"0.5px solid var(--color-border-tertiary)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
         <div style={{padding:"8px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
@@ -401,6 +521,7 @@ export default function BinPack3D(){
           <div style={{fontSize:11,color:"var(--color-text-secondary)",marginTop:2}}>SEAPA container &amp; pallet loading optimizer</div>
         </div>
 
+        {/* Shipping mode */}
         <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>SHIPPING MODE</div>
           <div style={{display:"flex",gap:4}}>
@@ -409,6 +530,7 @@ export default function BinPack3D(){
           </div>
         </div>
 
+        {/* Container / Pallet config */}
         {mode==="container"?(
           <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>CONTAINER TYPE</div>
@@ -425,7 +547,25 @@ export default function BinPack3D(){
           </div>
         ):(
           <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
-            <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:6,letterSpacing:.5}}>PALLET TYPE</div>
+            {/* Pack mode */}
+            <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>PACKING MODE</div>
+            <div style={{display:"flex",gap:4,marginBottom:8}}>
+              <button style={packBtn(palletPackMode==="cpp")} onClick={()=>setPalletPackMode("cpp")}>CPP-based (Mode A)</button>
+              <button style={packBtn(palletPackMode==="free")} onClick={()=>setPalletPackMode("free")}>Free pack (Mode B)</button>
+            </div>
+            {palletPackMode==="cpp"&&(
+              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
+                Mode A: full CPP pallets per SKU (no 3D) + geometric solve on remainders (3D)
+              </div>
+            )}
+            {palletPackMode==="free"&&(
+              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
+                Mode B: all cartons through geometric solver · adjust overhang to allow edge protrusion
+              </div>
+            )}
+
+            {/* Pallet type */}
+            <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>PALLET TYPE</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:4,marginBottom:8}}>
               {Object.entries(PALLETS).map(([key,pt])=>{const a=palletType===key;return(<button key={key} onClick={()=>handlePalletType(key)} style={{padding:"5px 3px",fontSize:10,fontFamily:"var(--font-mono)",fontWeight:a?600:400,background:a?"#3b82f6":"var(--color-background-secondary)",color:a?"#fff":"var(--color-text-secondary)",border:`0.5px solid ${a?"#3b82f6":"var(--color-border-secondary)"}`,borderRadius:6,cursor:"pointer",lineHeight:1.3}}>{pt.label}</button>);})}
             </div>
@@ -436,21 +576,42 @@ export default function BinPack3D(){
                 </div>
               ))}
             </div>
-            <div style={{fontSize:10,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px"}}>
+            <div style={{fontSize:10,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
               Cargo space: <span style={{fontWeight:600,color:cargoH>0?"#22c55e":"#ef4444"}}>{cargoH} cm</span>
               <span style={{marginLeft:8,opacity:.6}}>(Total {pallet.maxH} − board {pallet.palletThickness})</span>
+            </div>
+
+            {/* Overhang slider */}
+            <div style={{borderTop:"0.5px solid var(--color-border-tertiary)",paddingTop:6}}>
+              <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
+                <span style={{fontSize:10,color:"var(--color-text-secondary)",letterSpacing:.5,flex:1}}>
+                  OVERHANG{palletPackMode==="cpp"?" (remainder pallets only)":""}
+                </span>
+                <span style={{fontSize:10,color:ohcol,fontWeight:600}}>{overhang.toFixed(1)} cm</span>
+                <span style={{fontSize:9,color:"var(--color-text-secondary)"}}>{overhang===0?"none":overhang<=4?"minimal":overhang<=8?"moderate":"large"}</span>
+              </div>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <input type="range" min="0" max="20" step="0.5" value={overhang} onChange={e=>setOverhang(+e.target.value)} style={{flex:1}}/>
+                <input type="number" min="0" max="20" step="0.5" value={overhang} onChange={e=>setOverhang(Math.min(20,Math.max(0,Math.round(+e.target.value*2)/2)))}
+                  style={{fontFamily:"var(--font-mono)",fontSize:12,fontWeight:600,width:42,padding:"2px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:5,textAlign:"center",color:ohcol,background:"var(--color-background-primary)"}}/>
+                <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>cm</span>
+              </div>
+              {overhang>0&&<div style={{fontSize:9,color:"rgba(251,191,36,0.8)",marginTop:3}}>Effective footprint: {(pallet.L+2*overhang).toFixed(1)}×{(pallet.W+2*overhang).toFixed(1)} cm (shown in 3D with dashed border)</div>}
             </div>
           </div>
         )}
 
+        {/* Input mode */}
         <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
           <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>INPUT MODE</div>
           <div style={{display:"flex",gap:4}}>
             <button style={inputBtn(inputMode==="skus")}    onClick={()=>setInputMode("skus")}>SKUs (by units)</button>
             <button style={inputBtn(inputMode==="cartons")} onClick={()=>setInputMode("cartons")}>Cartons (by qty)</button>
           </div>
+          {cppNote&&<div style={{fontSize:9,color:"var(--color-text-warning)",marginTop:4}}>{cppNote}</div>}
         </div>
 
+        {/* Scrollable input */}
         <div style={{flex:1,overflowY:"auto",padding:"8px 12px",display:"flex",flexDirection:"column",gap:6}}>
           {inputMode==="skus"&&(<>
             <input placeholder="Search SKU or description…" value={search} onChange={e=>setSearch(e.target.value)}
@@ -471,7 +632,7 @@ export default function BinPack3D(){
                 <div style={{minWidth:0}}>
                   <div style={{fontSize:12,fontWeight:active?600:400,color:active?"var(--color-text-primary)":"var(--color-text-secondary)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.desc}</div>
                   {active?<div style={{fontSize:10,color:col,marginTop:1}}>→ {cartons} ctn{cartons!==1?"s":""} · {(cartons*s.cartonWt).toFixed(1)} kg</div>
-                        :<div style={{fontSize:9,color:"var(--color-text-secondary)",marginTop:1}}>pack {s.packSize} · {s.cartonWt} kg/ctn</div>}
+                        :<div style={{fontSize:9,color:"var(--color-text-secondary)",marginTop:1}}>pack {s.packSize} · {s.cartonWt} kg/ctn · cpp {s.cpp}</div>}
                 </div>
                 <input type="number" min="0" value={units||""} placeholder="0" onChange={e=>setOrder(s.sku,e.target.value)}
                   style={{fontFamily:"var(--font-mono)",fontSize:12,fontWeight:active?600:400,padding:"2px 4px",border:`0.5px solid ${active?col:"var(--color-border-tertiary)"}`,borderRadius:4,background:"var(--color-background-primary)",color:active?col:"var(--color-text-secondary)",textAlign:"center",outline:"none",width:"100%"}}/>
@@ -484,13 +645,8 @@ export default function BinPack3D(){
               <span style={{fontSize:14,color:"var(--color-text-secondary)",letterSpacing:.5}}>SET QTY — {activeBoxes.length} type{activeBoxes.length!==1?"s":""} active</span>
               <button onClick={clearAll} style={{fontSize:11,color:"var(--color-text-secondary)",background:"none",border:"0.5px solid var(--color-border-secondary)",borderRadius:4,padding:"2px 7px",cursor:"pointer"}}>clear all</button>
             </div>
-            <div style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,padding:"0 2px 4px",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
-              <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Code</span>
-              <span style={{fontSize:14,color:"var(--color-text-secondary)"}}>Description</span>
-              <span style={{fontSize:14,color:"var(--color-text-secondary)",textAlign:"center"}}>Qty</span>
-            </div>
             {boxes.map(b=>{const active=b.qty>0;return(
-              <div key={b.id} style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,alignItems:"center",padding:"3px 2px",borderRadius:4,borderLeft:`2px solid ${active?b.col:"var(--color-border-tertiary)"}`,background:active?"var(--color-background-primary)":"transparent",transition:"border-color .15s,background .15s"}}>
+              <div key={b.id} style={{display:"grid",gridTemplateColumns:"36px minmax(0,1fr) 72px",gap:4,alignItems:"center",padding:"3px 2px",borderRadius:4,borderLeft:`2px solid ${active?b.col:"var(--color-border-tertiary)"}`,background:active?"var(--color-background-primary)":"transparent"}}>
                 <div style={{textAlign:"center",fontSize:11,fontWeight:600,color:active?b.col:"var(--color-text-secondary)",background:active?`${b.col}18`:"transparent",borderRadius:3,padding:"1px 0"}}>{b.code}</div>
                 <div style={{minWidth:0}}>
                   <div style={{fontSize:13,fontWeight:active?600:400,color:active?"var(--color-text-primary)":"var(--color-text-secondary)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{b.name}</div>
@@ -503,6 +659,7 @@ export default function BinPack3D(){
           </>)}
         </div>
 
+        {/* Bottom: sliders + run + stats */}
         <div style={{flexShrink:0,borderTop:"0.5px solid var(--color-border-tertiary)",maxHeight:"45vh",overflowY:"auto"}}>
           <div style={{padding:"6px 12px",borderBottom:"0.5px solid var(--color-border-tertiary)",background:"var(--color-background-primary)"}}>
             <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
@@ -515,9 +672,6 @@ export default function BinPack3D(){
               <input type="number" min="0" max="30" step="0.5" value={gl} onChange={e=>setGl(Math.min(30,Math.max(0,+e.target.value)))}
                 style={{fontFamily:"var(--font-mono)",fontSize:13,fontWeight:600,width:42,padding:"2px 4px",border:"0.5px solid var(--color-border-secondary)",borderRadius:5,textAlign:"center",color:lcol,background:"var(--color-background-primary)"}}/>
               <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>%</span>
-            </div>
-            <div style={{height:2,background:"var(--color-background-tertiary)",borderRadius:2,overflow:"hidden",marginTop:5}}>
-              <div style={{height:"100%",width:`${(gl/30)*100}%`,background:lcol,transition:"width .2s,background .2s"}}/>
             </div>
           </div>
 
@@ -537,12 +691,16 @@ export default function BinPack3D(){
           )}
 
           <button onClick={runPack} disabled={busy||!hasInput}
-            style={{display:"block",width:"calc(100% - 24px)",margin:"8px 12px 0",padding:"15px",background:!hasInput||busy?"var(--color-background-secondary)":"#3b82f6",color:"#fff",border:`0.5px solid ${!hasInput||busy?"var(--color-border-secondary)":"#3b82f6"}`,boxShadow:hasInput&&!busy?"0 0 12px rgba(59,130,246,0.35)":"none",borderRadius:8,fontSize:17,fontWeight:600,cursor:!hasInput?"not-allowed":"pointer",opacity:(!hasInput||busy)?.45:1,transition:"all .2s"}}>
-            {busy?"Computing…":!hasInput?`Enter ${inputMode==="skus"?"SKU quantities":"carton quantities"} first`:`▶  Calculate ${mode==="container"?"container":"pallet"} packing`}
+            style={{display:"block",width:"calc(100% - 24px)",margin:"8px 12px 0",padding:"13px",background:!hasInput||busy?"var(--color-background-secondary)":"#3b82f6",color:"#fff",border:`0.5px solid ${!hasInput||busy?"var(--color-border-secondary)":"#3b82f6"}`,boxShadow:hasInput&&!busy?"0 0 12px rgba(59,130,246,0.35)":"none",borderRadius:8,fontSize:15,fontWeight:600,cursor:!hasInput?"not-allowed":"pointer",opacity:(!hasInput||busy)?.45:1,transition:"all .2s"}}>
+            {busy?"Computing…":!hasInput?`Enter ${inputMode==="skus"?"SKU":"carton"} quantities first`
+              :mode==="container"?"▶  Calculate container packing"
+              :palletPackMode==="cpp"&&inputMode==="skus"?"▶  Calculate — Mode A (CPP + remainder)"
+              :"▶  Calculate — Mode B (free pack)"}
           </button>
 
+          {/* Stats */}
           <div style={{padding:"8px 12px 10px"}}>
-            {mode==="container"?(
+            {mode==="container"&&(
               <>
                 {[["Packed",      result?.type==="container"?`${result.placed} / ${result.total}`:"—","var(--color-text-primary)"],
                   ["Not fitted",  result?.type==="container"?result.unpacked:"—","var(--color-text-danger,#e24b4a)"],
@@ -557,13 +715,28 @@ export default function BinPack3D(){
                   <div style={{height:"100%",width:`${Math.min(result?.type==="container"?result.pct:0,100)}%`,background:"#22c55e",transition:"width .5s"}}/>
                 </div>
               </>
-            ):(
-              [["Pallets needed",  result?.type==="pallet"?result.palletCount:"—","#3b82f6"],
-               ["Total cartons",   result?.type==="pallet"?result.totalCartons:"—","var(--color-text-primary)"],
-               ["Item weight",     result?.type==="pallet"&&inputMode==="skus"?`${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
-               ["Gross w/pallets", result?.type==="pallet"&&inputMode==="skus"?`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`:"—","var(--color-text-secondary)"],
-               ["Total volume",    result?.type==="pallet"?`${result.totalVol.toFixed(3)} m³`:"—","var(--color-text-secondary)"],
-               ["Unplaced cartons",result?.type==="pallet"?result.unplaced:"—","var(--color-text-danger,#e24b4a)"],
+            )}
+            {mode==="pallet"&&result?.type==="pallet-cpp"&&(
+              [["Full CPP pallets", result.fullPalletCount,"#0f6e56"],
+               ["Remainder pallets",result.remPalletCount,"#3b82f6"],
+               ["Total pallets",    result.totalPallets,"var(--color-text-primary)"],
+               ["Total cartons",    result.totalCartons,"var(--color-text-primary)"],
+               ["Item weight",      `${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`,"var(--color-text-secondary)"],
+               ["Gross w/pallets",  `${result.totalGrossWt.toFixed(1)} kg`,"var(--color-text-secondary)"],
+               ["Unplaced cartons", result.unplaced,"var(--color-text-danger,#e24b4a)"],
+              ].map(([l,v,c])=>(
+                <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
+                  <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
+                </div>
+              ))
+            )}
+            {mode==="pallet"&&result?.type==="pallet"&&(
+              [["Pallets needed",  result.palletCount,"#3b82f6"],
+               ["Total cartons",  result.totalCartons,"var(--color-text-primary)"],
+               ["Item weight",    `${result.totalItemWt.toFixed(1)} kg / ${(result.totalItemWt*2.205).toFixed(1)} lbs`,"var(--color-text-secondary)"],
+               ["Gross w/pallets",`${result.totalWt.toFixed(1)} kg / ${(result.totalWt*2.205).toFixed(1)} lbs`,"var(--color-text-secondary)"],
+               ["Total volume",   `${result.totalVol.toFixed(3)} m³`,"var(--color-text-secondary)"],
+               ["Unplaced",       result.unplaced,"var(--color-text-danger,#e24b4a)"],
               ].map(([l,v,c])=>(
                 <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"2px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",fontSize:11}}>
                   <span style={{color:"var(--color-text-secondary)"}}>{l}</span><span style={{fontWeight:600,color:c}}>{v}</span>
@@ -580,92 +753,159 @@ export default function BinPack3D(){
         onWheel={onWheel} onContextMenu={e=>e.preventDefault()}>
         <canvas ref={cvRef} style={{display:"block",width:"100%",height:"100%"}}/>
 
-        {/* Top-left: container/pallet spec */}
-        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:15,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
+        {/* Top-left spec */}
+        <div style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.55)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:7,padding:"5px 10px",fontSize:13,color:"rgba(180,200,220,0.7)",fontFamily:"var(--font-mono)"}}>
           {mode==="container"
             ?`${CONTAINERS[contType]?.label??"Custom"} · ${cont.L}×${cont.W}×${cont.H} cm · ${contVolM3} m³`
-            :`${PALLETS[palletType]?.label??"Custom"} · ${pallet.L}×${pallet.W} cm · board ${pallet.palletThickness} cm · cargo ${cargoH} cm · max ${pallet.maxWt} kg`}
+            :`${PALLETS[palletType]?.label??"Custom"} · ${pallet.L}×${pallet.W} cm · board ${pallet.palletThickness} cm · cargo ${cargoH} cm${overhang>0?` · +${overhang}cm overhang`:""}`}
         </div>
 
         {/* Empty state */}
         {!result&&(
           <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",pointerEvents:"none"}}>
             <div style={{fontSize:56,color:"rgba(255,255,255,0.04)"}}>{mode==="container"?"▣":"⬛"}</div>
-            <div style={{fontSize:11,color:"rgba(160,180,200,0.2)",marginTop:10,letterSpacing:3}}>{inputMode==="skus"?"ENTER SKUs · CALCULATE":"SET QUANTITIES · CALCULATE"}</div>
+            <div style={{fontSize:11,color:"rgba(160,180,200,0.2)",marginTop:10,letterSpacing:3}}>ENTER QUANTITIES · CALCULATE</div>
           </div>
         )}
 
-        {/* Top-right legend / per-pallet breakdown */}
-        {result&&(
-          <div style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 13px",display:"flex",flexDirection:"column",gap:5,maxHeight:"80vh",overflowY:"auto",minWidth:200}}>
+        {/* Mode A: no remainder — message in viewport */}
+        {result?.type==="pallet-cpp"&&result.remPalletCount===0&&(
+          <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",pointerEvents:"none"}}>
+            <div style={{fontSize:32,color:"rgba(15,110,86,0.4)"}}>✓</div>
+            <div style={{fontSize:12,color:"rgba(30,180,120,0.5)",marginTop:8,letterSpacing:2}}>ALL CARTONS FIT INTO FULL CPP PALLETS</div>
+            <div style={{fontSize:10,color:"rgba(120,160,140,0.35)",marginTop:4}}>No remainder to visualize — see breakdown panel</div>
+          </div>
+        )}
 
-            {/* Container mode: carton type legend */}
+        {/* Top-right overlay */}
+        {result&&(
+          <div style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 13px",display:"flex",flexDirection:"column",gap:5,maxHeight:"88vh",overflowY:"auto",minWidth:220}}>
+
+            {/* Container legend */}
             {result.type==="container"&&activeTypes.map(t=>{
               const n=pRef.current.filter(p=>p.cartonType===t).length,total=cartonItems.filter(i=>i.cartonType===t).length,col=TYPE_COLS[t]||"#888",dims=CARTON_TYPES[t];
-              return(<div key={t} style={{display:"flex",alignItems:"center",gap:8,fontSize:15,color:"rgba(200,220,240,0.85)"}}>
+              return(<div key={t} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(200,220,240,0.85)"}}>
                 <div style={{width:9,height:9,borderRadius:2,background:col,flexShrink:0}}/>
-                <span style={{fontSize:14,fontWeight:700,color:col}}>{t}</span>
+                <span style={{fontSize:13,fontWeight:700,color:col}}>{t}</span>
                 <span>{n}/{total}</span>
-                {dims&&<span style={{fontSize:13,color:"rgba(160,180,200,0.4)"}}>{dims.l}×{dims.w}×{dims.h}</span>}
+                {dims&&<span style={{fontSize:11,color:"rgba(160,180,200,0.4)"}}>{dims.l}×{dims.w}×{dims.h}</span>}
               </div>);
             })}
 
-            {/* Pallet mode: carton types + per-pallet breakdown table */}
-            {result.type==="pallet"&&(<>
+            {/* Mode A overlay */}
+            {result.type==="pallet-cpp"&&(<>
               {/* Carton type legend */}
               {activeTypes.map(t=>{const col=TYPE_COLS[t]||"#888",dims=CARTON_TYPES[t];return(
-                <div key={t} style={{display:"flex",alignItems:"center",gap:8,fontSize:15,color:"rgba(200,220,240,0.85)"}}>
+                <div key={t} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(200,220,240,0.85)"}}>
                   <div style={{width:9,height:9,borderRadius:2,background:col,flexShrink:0}}/>
-                  <span style={{fontSize:14,fontWeight:700,color:col}}>{t}</span>
-                  {dims&&<span style={{fontSize:13,color:"rgba(160,180,200,0.4)"}}>{dims.l}×{dims.w}×{dims.h}</span>}
+                  <span style={{fontWeight:700,color:col}}>{t}</span>
+                  {dims&&<span style={{fontSize:11,color:"rgba(160,180,200,0.4)"}}>{dims.l}×{dims.w}×{dims.h}</span>}
                 </div>);
               })}
 
-              {/* Divider */}
-              <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",marginTop:4,paddingTop:6}}>
-                {/* Pallet dimensions header */}
-                <div style={{fontSize:10,color:"rgba(120,160,200,0.6)",marginBottom:5,letterSpacing:.5}}>
-                  PALLET BREAKDOWN · {result.pDims.L}×{result.pDims.W} cm · cargo {result.pDims.cargoH} cm
-                </div>
+              {/* Full pallet cards */}
+              <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:6,marginTop:2}}>
+                <div style={{fontSize:10,color:"rgba(15,200,120,0.7)",letterSpacing:.5,marginBottom:5}}>FULL CPP PALLETS ({result.fullPalletCount} total)</div>
+                {result.fullPallets.map((fp,i)=>(
+                  <div key={fp.sku+i} style={{marginBottom:6,padding:"5px 7px",background:"rgba(15,110,86,0.12)",borderRadius:5,border:"0.5px solid rgba(15,200,120,0.2)"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
+                      <div style={{width:7,height:7,borderRadius:2,background:fp.col,flexShrink:0}}/>
+                      <span style={{fontSize:12,fontWeight:700,color:fp.col}}>{fp.sku}</span>
+                      <span style={{fontSize:10,opacity:.6}}>{fp.cartonType}</span>
+                      <span style={{marginLeft:"auto",fontSize:13,fontWeight:700,color:"rgba(15,200,120,0.9)"}}>×{fp.palletCount}</span>
+                    </div>
+                    <div style={{fontSize:10,color:"rgba(160,200,180,0.7)",lineHeight:1.6}}>
+                      {fp.ctnsPerPallet} ctns/pallet · {fp.palletL}×{fp.palletW}×{(fp.stackH+result.pDims.thickness).toFixed(0)} cm<br/>
+                      {fp.totalItemWt.toFixed(0)} kg items · {fp.grossWt.toFixed(0)} kg gross
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                {/* Column headers */}
-                <div style={{display:"grid",gridTemplateColumns:"28px 1fr 64px 64px 52px",gap:4,marginBottom:4}}>
-                  {["","Ctns","Cargo wt","Gross wt","Stack"].map((h,i)=>(
+              {/* Remainder pallet stats */}
+              {result.palletStats&&result.palletStats.length>0&&(
+                <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:6}}>
+                  <div style={{fontSize:10,color:"rgba(60,150,255,0.7)",letterSpacing:.5,marginBottom:5}}>
+                    REMAINDER PALLETS ({result.palletStats.length}) — 3D VIEW{result.overhang>0?` · +${result.overhang}cm overhang`:""}
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4,marginBottom:4}}>
+                    {["","Ctns","Cargo","Gross","Stack"].map((h,i)=>(
+                      <span key={i} style={{fontSize:9,color:"rgba(120,160,200,0.5)",textAlign:i>1?"right":i===0?"center":"left"}}>{h}</span>
+                    ))}
+                  </div>
+                  {result.palletStats.map(ps=>{
+                    const fillPct=Math.round((ps.usedH/ps.cargoH)*100);
+                    const grossWt=ps.wt+result.palletWt;
+                    const barCol=fillPct>=90?"#ef4444":fillPct>=70?"#f59e0b":"#22c55e";
+                    return(
+                      <div key={ps.n} style={{marginBottom:5}}>
+                        <div style={{display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4,alignItems:"center"}}>
+                          <span style={{fontSize:11,fontWeight:700,color:"rgba(60,150,255,0.9)",textAlign:"center"}}>P{ps.n}</span>
+                          <span style={{fontSize:11,color:"rgba(190,210,230,0.85)"}}>{ps.ctns} ctn{ps.ctns!==1?"s":""}</span>
+                          <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{ps.wt.toFixed(1)}</span>
+                          <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{grossWt.toFixed(1)}</span>
+                          <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{(ps.usedH+result.pDims.thickness).toFixed(0)}/{ps.cargoH+result.pDims.thickness}</span>
+                        </div>
+                        <div style={{height:2,background:"rgba(255,255,255,0.06)",borderRadius:1,overflow:"hidden",marginTop:2,marginLeft:28}}>
+                          <div style={{height:"100%",width:`${Math.min(fillPct,100)}%`,background:barCol}}/>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:4,display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4}}>
+                    <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"center"}}>Σ</span>
+                    <span style={{fontSize:10,color:"rgba(120,160,200,0.5)"}}>{result.palletStats.reduce((s,p)=>s+p.ctns,0)} ctns</span>
+                    <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"right"}}>{result.remItemWt.toFixed(1)}</span>
+                    <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"right"}}>{result.remGrossWt.toFixed(1)}</span>
+                  </div>
+                </div>
+              )}
+            </>)}
+
+            {/* Mode B overlay */}
+            {result.type==="pallet"&&(<>
+              {activeTypes.map(t=>{const col=TYPE_COLS[t]||"#888",dims=CARTON_TYPES[t];return(
+                <div key={t} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(200,220,240,0.85)"}}>
+                  <div style={{width:9,height:9,borderRadius:2,background:col,flexShrink:0}}/>
+                  <span style={{fontWeight:700,color:col}}>{t}</span>
+                  {dims&&<span style={{fontSize:11,color:"rgba(160,180,200,0.4)"}}>{dims.l}×{dims.w}×{dims.h}</span>}
+                </div>);
+              })}
+              <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:6,marginTop:2}}>
+                <div style={{fontSize:10,color:"rgba(120,160,200,0.6)",marginBottom:5,letterSpacing:.5}}>
+                  ALL PALLETS · {result.pDims.L}×{result.pDims.W} cm · cargo {result.pDims.cargoH} cm
+                  {result.overhang>0?` · +${result.overhang}cm overhang`:""}
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4,marginBottom:4}}>
+                  {["","Ctns","Cargo","Gross","Stack"].map((h,i)=>(
                     <span key={i} style={{fontSize:9,color:"rgba(120,160,200,0.5)",textAlign:i>1?"right":i===0?"center":"left"}}>{h}</span>
                   ))}
                 </div>
-
-                {/* Per-pallet rows */}
                 {result.palletStats.map(ps=>{
                   const fillPct=Math.round((ps.usedH/ps.cargoH)*100);
                   const grossWt=ps.wt+result.palletWt;
-                  const barW=Math.min(fillPct,100);
                   const barCol=fillPct>=90?"#ef4444":fillPct>=70?"#f59e0b":"#22c55e";
                   return(
-                    <div key={ps.n} style={{marginBottom:6}}>
-                      <div style={{display:"grid",gridTemplateColumns:"28px 1fr 64px 64px 52px",gap:4,alignItems:"center"}}>
+                    <div key={ps.n} style={{marginBottom:5}}>
+                      <div style={{display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4,alignItems:"center"}}>
                         <span style={{fontSize:11,fontWeight:700,color:"rgba(60,150,255,0.9)",textAlign:"center"}}>P{ps.n}</span>
                         <span style={{fontSize:11,color:"rgba(190,210,230,0.85)"}}>{ps.ctns} ctn{ps.ctns!==1?"s":""}</span>
-                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{ps.wt.toFixed(1)} kg</span>
-                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{grossWt.toFixed(1)} kg</span>
-                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{(ps.usedH + result.pDims.thickness).toFixed(0)}/{ps.cargoH + result.pDims.thickness} cm</span>
+                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{ps.wt.toFixed(1)}</span>
+                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{grossWt.toFixed(1)}</span>
+                        <span style={{fontSize:11,color:"rgba(190,210,230,0.85)",textAlign:"right"}}>{(ps.usedH+result.pDims.thickness).toFixed(0)}/{ps.cargoH+result.pDims.thickness}</span>
                       </div>
-                      {/* Fill bar */}
-                      <div style={{height:2,background:"rgba(255,255,255,0.06)",borderRadius:1,overflow:"hidden",marginTop:3,marginLeft:28}}>
-                        <div style={{height:"100%",width:`${barW}%`,background:barCol,transition:"width .4s"}}/>
+                      <div style={{height:2,background:"rgba(255,255,255,0.06)",borderRadius:1,overflow:"hidden",marginTop:2,marginLeft:28}}>
+                        <div style={{height:"100%",width:`${Math.min(fillPct,100)}%`,background:barCol}}/>
                       </div>
-                      <div style={{fontSize:9,color:"rgba(120,160,190,0.5)",textAlign:"right",marginTop:1}}>{fillPct}% height used</div>
+                      <div style={{fontSize:9,color:"rgba(120,160,190,0.45)",textAlign:"right",marginTop:1}}>{fillPct}%</div>
                     </div>
                   );
                 })}
-
-                {/* Total row */}
-                <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:5,marginTop:2,display:"grid",gridTemplateColumns:"28px 1fr 64px 64px 52px",gap:4}}>
-                  <span style={{fontSize:10,color:"rgba(120,160,200,0.6)",textAlign:"center"}}>Σ</span>
-                  <span style={{fontSize:10,color:"rgba(120,160,200,0.6)"}}>{result.totalCartons} ctns</span>
-                  <span style={{fontSize:10,color:"rgba(120,160,200,0.6)",textAlign:"right"}}>{result.totalItemWt.toFixed(1)} kg</span>
-                  <span style={{fontSize:10,color:"rgba(120,160,200,0.6)",textAlign:"right"}}>{result.totalWt.toFixed(1)} kg</span>
-                  <span style={{fontSize:10,color:"rgba(120,160,200,0.6)",textAlign:"right"}}></span>
+                <div style={{borderTop:"0.5px solid rgba(255,255,255,0.1)",paddingTop:4,display:"grid",gridTemplateColumns:"28px 1fr 60px 60px 50px",gap:4}}>
+                  <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"center"}}>Σ</span>
+                  <span style={{fontSize:10,color:"rgba(120,160,200,0.5)"}}>{result.totalCartons} ctns</span>
+                  <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"right"}}>{result.totalItemWt.toFixed(1)}</span>
+                  <span style={{fontSize:10,color:"rgba(120,160,200,0.5)",textAlign:"right"}}>{result.totalWt.toFixed(1)}</span>
                 </div>
               </div>
             </>)}
