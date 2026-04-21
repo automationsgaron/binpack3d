@@ -550,16 +550,16 @@ export default function BinPack3D(){
             {/* Pack mode */}
             <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:5,letterSpacing:.5}}>PACKING MODE</div>
             <div style={{display:"flex",gap:4,marginBottom:8}}>
-              <button style={packBtn(palletPackMode==="cpp")} onClick={()=>setPalletPackMode("cpp")}>CPP-based (Mode A)</button>
-              <button style={packBtn(palletPackMode==="free")} onClick={()=>setPalletPackMode("free")}>Free pack (Mode B)</button>
+              <button style={packBtn(palletPackMode==="cpp")} onClick={()=>setPalletPackMode("cpp")}>CPP-based</button>
+              <button style={packBtn(palletPackMode==="free")} onClick={()=>setPalletPackMode("free")}>Free pack</button>
             </div>
             {palletPackMode==="cpp"&&(
-              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
+              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-primary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
                 Mode A: full CPP pallets per SKU (no 3D) + geometric solve on remainders (3D)
               </div>
             )}
             {palletPackMode==="free"&&(
-              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-secondary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
+              <div style={{fontSize:9,color:"var(--color-text-secondary)",background:"var(--color-background-primary)",borderRadius:4,padding:"3px 6px",marginBottom:6}}>
                 Mode B: all cartons through geometric solver · adjust overhang to allow edge protrusion
               </div>
             )}
